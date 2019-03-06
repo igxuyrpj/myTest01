@@ -1,0 +1,119 @@
+/*!
+ jquery.higo_plugins_ad.js(v0.1)
+ http://www.higosoft.cn
+
+ Copyright (c) 2011 wdong
+ Dual licensed under the MIT and GPL licenses.
+ */
+
+/*
+ * 创建浮动图片广告（Generate a dock AD image）
+ *
+ * USAGE: 
+ *	$(selector).higo_plugins_ad({
+ *		src:null,                    // 广告图片路径
+ *		closeSrc:null,               // 关闭图片路径
+ *		href:"#",                    // 广告图片链接地址
+ *		autoHide:true,               // 是否自动隐藏
+ *		hideSecond:10,               // 延迟隐藏秒数
+ *		top:20,                      // 距离顶部偏移高度
+ *		layout:"left",               // 图片位置：left 居左 ,right 居右, center 居中, 
+ *		width:100,                   // 宽度
+ *		height:100,                  // 高度
+ *		opacity:0.5					 // 透明度opacity:0.5(firefox), filter:alpha(opacity=50)(IE)
+ *		setPosition:function(left, top){ // 预留自定义显示位置的方法（尚未实现）
+ *			return;
+ *		}	
+ *	})
+ */
+
+(function($){
+    $.fn.lastScrollY= 0;
+    $.fn.higo_plugins_ad = function(options){
+        $(this).addClass("higo_plugins_ad");
+        var settings = $.extend({
+            src:null,
+            closeSrc:null,
+            href:"#",
+            autoHide:true,
+            hideSecond:10,
+            top:20,
+            layout:"left",
+            width:100,
+            height:100,
+            opacity:0.5,
+            left:2,
+            right:2,
+            z:999,
+            setPosition:function(left, top){
+                return;
+            }
+        },options || {});
+
+        if(settings.src && settings.closeSrc){
+            var imgEl = "<a><img border=0 width='" + settings.width + "px' height='" + settings.height + "px' src='" + settings.src + "'/> <br></a>";
+            if(settings.href!="")
+            {
+                 imgEl = "<a href='" + settings.href + "' target='_blank'><img border=0 width='" + settings.width + "px' height='" + settings.height + "px' src='" + settings.src + "'/> <br></a>";
+            }
+            var closeImgEl = "<div style='text-align: right;'><a  onclick=\"this.parentElement.parentElement.style.visibility='hidden'\" style='align:right;'><img border=0 src='" + settings.closeSrc +"'/></a></div>";
+            $(this).append(imgEl + closeImgEl);
+
+            $(this).css("position","absolute");
+            $(this).css("top",settings.top + "px");
+            $(this).css("opacity",settings.opacity);
+            $(this).css("filter","alpha(opacity=" + parseInt(settings.opacity * 100)  + ")");
+            $(this).css("z-index",settings.z);
+            switch(settings.layout) {
+                case "left":
+                    $(this).css("left",settings.left + "px");
+                    break;
+                case "right":
+                    $(this).css("right",settings.left + "px");
+                    break;
+                case "center":
+                    var left = ($(window).width() - this.width()) / 2 + $(window).scrollLeft() + "px" ;
+                    if(navigator.userAgent.indexOf("MSIE")>0) {
+                    // left=(parseInt(window.screen.availWidth) - parseInt(settings.width)-40)/2 + "px";
+                        $(this).css("left","50%");
+                        $(this).css("margin-left",-settings.width/2-15);
+                    }else{
+                        $(this).css("left",left);
+                    }
+                    $(this).find("img").slideDown("slow") ;
+                    break;
+                default:
+                    $(this).css("left",settings.left + "px");
+                    break;
+            }
+        } else {
+            return;
+        }
+
+        if(settings.autoHide) {
+            setTimeout("(function(){$('" + $(this).selector +  "').slideToggle('slow');})();",parseInt(settings.hideSecond) * 1000);
+        }
+
+        window.onscroll = function(){
+            var diffY;
+            if (document.documentElement && document.documentElement.scrollTop)
+                diffY = document.documentElement.scrollTop;
+            else if (document.body)
+                diffY = document.body.scrollTop
+            else {
+                /*Netscape stuff*/
+            }
+
+           var percent= 1 * (diffY - $.fn.lastScrollY);
+            if(percent>0)
+                percent=Math.ceil(percent);
+            else
+                percent=Math.floor(percent);
+
+            var top = $('.higo_plugins_ad').css("top");
+
+            $('.higo_plugins_ad').css("top", parseInt(top) + percent + "px");
+            $.fn.lastScrollY += percent;
+        }
+    }
+})(jQuery);

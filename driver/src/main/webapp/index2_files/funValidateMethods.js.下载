@@ -1,0 +1,29 @@
+/* 
+ * 扩展的验证方法
+ */
+
+define([], function($) {
+	var methods = {
+		// 驾驶证号
+		'jszh': {
+			/**
+			 *
+			 * @param value      表单元素里的值
+			 * @param ele        表单元素
+			 * @param params     验证规则参数
+			 **/
+			validate: function(value, ele, params) {
+				var test = (value == 'jszh');
+				// 如果验证失败则返回提示字串
+				if(!test){
+					return '驾驶证号码不合法';
+				}else{
+					// 验证成功不需要返回任何数据
+				}
+			},
+			autoLabel:false   // 指定错误提示是否自动添加标签
+		},
+		'other_method':{}
+	};
+	return methods;
+});

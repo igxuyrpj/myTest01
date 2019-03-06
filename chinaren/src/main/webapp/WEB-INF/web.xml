@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
+  <display-name>springmvc</display-name>
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+    <welcome-file>index.htm</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>default.html</welcome-file>
+    <welcome-file>default.htm</welcome-file>
+    <welcome-file>default.jsp</welcome-file>
+  </welcome-file-list>
+  <!-- 配制前端控制器 -->
+  <servlet>
+  	<servlet-name>DispatcherServlet</servlet-name>
+  	<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+  	<!-- 加载springmvc的核心配制文件-->
+  	<init-param>
+  		<param-name>contextConfigLocation</param-name>
+  		<param-value>classpath:springmvc-anno.xml</param-value>
+  	</init-param>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>DispatcherServlet</servlet-name>
+  	<url-pattern>/</url-pattern>
+  </servlet-mapping>
+  <!-- 配制字符编码过滤器 -->
+  <filter>
+  	<filter-name>characterEncodingFilter</filter-name>
+  	<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+  	<init-param>
+  		<param-name>encoding</param-name>
+  		<param-value>UTF-8</param-value>
+  	</init-param>
+  </filter>
+  <filter-mapping>
+	  <filter-name>characterEncodingFilter</filter-name>
+	  <url-pattern>/*</url-pattern>
+  </filter-mapping>
+  
+  
+   <!-- 配制把post请求转为delete，put-->
+   <!--  <filter>
+   <filter-name>MethodFilter</filter-name>
+     <filter-class>org.springframework.web.filter.HiddenHttpMethodFilter</filter-class>
+   </filter>
+   <filter-mapping>
+   <filter-name>MethodFilter</filter-name>
+   <url-pattern>/*</url-pattern>
+   </filter-mapping>
+   -->
+    <!-- 激活Tomcat的defaultServlet来处理静态文件（效率较高） -->  
+    <servlet-mapping>
+      <servlet-name>default</servlet-name>
+      <url-pattern>*.jpg</url-pattern>
+      <url-pattern>*.gif</url-pattern>
+      <url-pattern>*.png</url-pattern>
+      <url-pattern>*.js</url-pattern>
+      <url-pattern>*.css</url-pattern>
+      <url-pattern>*.ico</url-pattern>
+      <url-pattern>*.eot</url-pattern>
+      <url-pattern>*.svg</url-pattern>
+      <url-pattern>*.ttf</url-pattern>
+      <url-pattern>*.woff</url-pattern>
+      <url-pattern>*.mp3</url-pattern>
+      <url-pattern>*.html</url-pattern>
+    </servlet-mapping>
+    
+  
+   
+   
+</web-app>

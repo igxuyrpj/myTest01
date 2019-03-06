@@ -1,0 +1,135 @@
+/**
+ * Created by guyl on 2015/6/16.
+ */
+/**
+ * 区域切换js
+ * Created by quanxw on 2016/06/09 [端午] 你看到注释的时候,还记得那天吃粽子了吗?
+ */
+define(['jquery', 'js/funPlaceholder'], function ($) {
+    var _mouselock = false, _openchild = false,
+        _loadDiscrictList = function (sfdm,currentName) {
+            if (sfdm == '320000') {
+                $("#district-name").text("江苏省");
+                $('#areaswitch').html(
+                    '<li><a href="/m/index/jump/320100" target="_self">南京</a></li>' +
+                    '<li><a href="/m/index/jump/320200" target="_self">无锡</a></li>' +
+                    '<li><a href="/m/index/jump/320300" target="_self">徐州</a></li>' +
+                    '<li><a href="/m/index/jump/320400" target="_self">常州</a></li>' +
+                    '<li><a href="/m/index/jump/320500" target="_self">苏州</a></li>' +
+                    '<li><a href="/m/index/jump/320600" target="_self">南通</a></li>' +
+                    '<li><a href="/m/index/jump/320700" target="_self">连云港</a></li>' +
+                    '<li><a href="/m/index/jump/320800" target="_self">淮安</a></li>' +
+                    '<li><a href="/m/index/jump/320900" target="_self">盐城</a></li>' +
+                    '<li><a href="/m/index/jump/321000" target="_self">扬州</a></li>' +
+                    '<li><a href="/m/index/jump/321100" target="_self">镇江</a></li>' +
+                    '<li><a href="/m/index/jump/321200" target="_self">泰州</a></li>' +
+                    '<li><a href="/m/index/jump/321300" target="_self">宿迁</a></li>'+
+                    '<li><a id="areaswitch-back" ><span class="text-error text-center">&lt;回上一级</span></a></li>'
+
+                );
+                _mouselock = true;
+                _openchild = true;
+                $("#areaswitch-back").off('click').on('click', function () {
+                    _loadDiscrictList(null,currentName);
+                    return false;
+                });
+
+            } else if (sfdm == '330000') {
+                $("#district-name").text("浙江省");
+                $('#areaswitch').html(
+                    // '<div style="padding-left: 10px">请选择[浙江省]各地市 <a id="areaswitch-back">返回上一级</a></div>'+
+                    '<li><a href="/m/index/jump/330100" target="_self">杭州</a></li>' +
+                    '<li><a href="/m/index/jump/330200" target="_self">宁波</a></li>' +
+                    '<li><a href="/m/index/jump/330300" target="_self">温州</a></li>' +
+                    '<li><a href="/m/index/jump/330400" target="_self">嘉兴</a></li>' +
+                    '<li><a href="/m/index/jump/330500" target="_self">湖州</a></li>' +
+                    '<li><a href="/m/index/jump/330600" target="_self">绍兴</a></li>' +
+                    '<li><a href="/m/index/jump/330700" target="_self">金华</a></li>' +
+                    '<li><a href="/m/index/jump/330800" target="_self">衢州</a></li>' +
+                    '<li><a href="/m/index/jump/330900" target="_self">舟山</a></li>' +
+                    '<li><a href="/m/index/jump/331000" target="_self">台州</a></li>' +
+                    '<li><a href="/m/index/jump/331100" target="_self">丽水</a></li>'+
+                    '<li><a id="areaswitch-back" ><span class="text-error">&lt;回上一级</span></a></li>'
+                );
+                _mouselock = true;
+                _openchild = true;
+                $("#areaswitch-back").off('click').on('click', function () {
+                    _loadDiscrictList(null,currentName);
+                    return false;
+                });
+            } else {
+                $("#district-name").text(currentName);
+                $('#areaswitch').html('<li><a href="/m/index/jump/110000" target="_self">北京</a></li>' +
+                    '<li><a href="/m/index/jump/120000" target="_self">天津</a></li>' +
+                    '<li><a href="/m/index/jump/130000" target="_self">河北</a></li>' +
+                    '<li><a href="/m/index/jump/140000" target="_self">山西</a></li>' +
+                    '<li><a href="/m/index/jump/150000" target="_self">内蒙古</a></li>' +
+                    '<li><a href="/m/index/jump/210000" target="_self">辽宁</a></li>' +
+                    '<li><a href="/m/index/jump/220000" target="_self">吉林</a></li>' +
+                    '<li><a href="/m/index/jump/230000" target="_self">黑龙江</a></li>' +
+                    '<li><a href="/m/index/jump/310000" target="_self">上海</a></li>' +
+                    '<li><a href="#" id="areaswitch-jx" target="_self">江苏</a></li>' +
+                    '<li><a href="#" id="areaswitch-zj" target="_self">浙江</a></li>' +
+                    '<li><a href="/m/index/jump/340000" target="_self">安徽</a></li>' +
+                    '<li><a href="/m/index/jump/350000" target="_self">福建</a></li>' +
+                    '<li><a href="/m/index/jump/360000" target="_self">江西</a></li>' +
+                    '<li><a href="/m/index/jump/370000" target="_self">山东</a></li>' +
+                    '<li><a href="/m/index/jump/410000" target="_self">河南</a></li>' +
+                    '<li><a href="/m/index/jump/420000" target="_self">湖北</a></li>' +
+                    '<li><a href="/m/index/jump/430000" target="_self">湖南</a></li>' +
+                    '<li><a href="/m/index/jump/440000" target="_self">广东</a></li>' +
+                    '<li><a href="/m/index/jump/450000" target="_self">广西</a></li>' +
+                    '<li><a href="/m/index/jump/460000" target="_self">海南</a></li>' +
+                    '<li><a href="/m/index/jump/500000" target="_self">重庆</a></li>' +
+                    '<li><a href="/m/index/jump/510000" target="_self">四川</a></li>' +
+                    '<li><a href="/m/index/jump/520000" target="_self">贵州</a></li>' +
+                    '<li><a href="/m/index/jump/530000" target="_self">云南</a></li>' +
+                    '<li><a href="/m/index/jump/540000" target="_self">西藏</a></li>' +
+                    '<li><a href="/m/index/jump/610000" target="_self">陕西</a></li>' +
+                    '<li><a href="/m/index/jump/620000" target="_self">甘肃</a></li>' +
+                    '<li><a href="/m/index/jump/630000" target="_self">青海</a></li>' +
+                    '<li><a href="/m/index/jump/640000" target="_self">宁夏</a></li>' +
+                    '<li><a href="/m/index/jump/650000" target="_self">新疆</a></li>');
+                // _mouselock = false;
+                // _openchild = false;
+                $("#areaswitch-jx").off('click').on('click', function () {
+                    _loadDiscrictList('320000',currentName);
+                    return false;
+                });
+                $("#areaswitch-zj").off('click').on('click', function () {
+                    _loadDiscrictList('330000',currentName);
+                    return false;
+                });
+            }
+        };
+
+    var innerInitialDistrictTool = function () {
+        var _district_name = $("#district-name").text();
+        $('#toptool .dropdown').mouseenter(function () {
+            if (_openchild) {
+                _openchild = false;
+            }
+            if (_mouselock) {
+                return;
+            }
+            _mouselock = true;
+
+            $(this).addClass('open');
+            $('input', $(this)).placeholder();
+            _loadDiscrictList(null,_district_name);
+        }).mouseleave(function () {
+            if (_openchild) {
+                _openchild = false;
+                return;
+            }
+            _mouselock = false;
+            $("#district-name").text(_district_name);
+            $(this).removeClass('open');
+        });
+    };
+    render = {
+        _initialDistrictTool:innerInitialDistrictTool
+
+    };
+    return render;
+});

@@ -1,0 +1,29 @@
+/**
+ * Created by guyl on 2017/7/20.
+ */
+define(['jquery',  'lib/cookie/jquery.cookie','aes'],
+    function ($) {
+        var my1="9edf35e3db9",my2="dedb4c9cdfb9",my3="f8c7fd111";
+        var xl1="0a379ab1ee9",xl2="6d36b7a002",xl3="cb40a40398a";
+        var key =CryptoJS.enc.Hex.parse(my3+my2+my1);   //加密密钥
+        var iv  = CryptoJS.enc.Hex.parse(xl1+xl3+xl2);   //加密向量
+        return {
+            gentoken:function () {
+                try{
+                    var accessToken=$.cookie("accessToken");
+                    accessToken= accessToken.replace(/\s/g,"+");//替换空格为+ base64 处理
+                    var decrypt = CryptoJS.AES.decrypt(accessToken, key, {
+                        iv: iv,mode:CryptoJS.mode.CBC
+                    });
+                    decrypt=CryptoJS.enc.Utf8.stringify(decrypt);
+                    var array=decrypt.split("#");
+                    var md5=CryptoJS.MD5(array[4]+array[0]+array[2]+array[3]);
+                    var md5key=array[1];
+                    return {md5key:md5key,md5Value:md5};
+                }catch(error){
+                    return null;
+                }
+
+            }
+        }
+    });

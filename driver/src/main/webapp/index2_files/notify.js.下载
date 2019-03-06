@@ -1,0 +1,94 @@
+// 该js主要用于公共页面加载使用
+define(
+		[ 'jquery', 'js/tpls', 'js/urls', 'js/funPagination',
+				'js/funFormUtils', 'js/funMsgUtils' ],
+		function($, tpls, urls, pagination, futils, msgutils) {
+			var _place;
+			flag = false;
+			var queryNotifyBus = function(fzjg, gnid, tzlx, place,callback) {
+				_place = place;
+				$.ajax(urls.ajaxData({
+					url : urls.apibase + urls.queryNotifyBus,
+					data : {
+						fzjg : fzjg,
+						gnid : gnid,
+						tzlx : tzlx
+					}
+				}, function(result) {
+                    $(_place).removeClass("loading")
+					$(_place).append(result.data.hdnr);
+                    if(typeof callback == 'function'){
+                        callback();
+                    }
+				}, function(data) {
+					msgutils.showErrorMsg(data);
+
+				}));
+			};
+            var queryNotifyBusData = function(fzjg, gnid, tzlx,callback) {
+                $.ajax(urls.ajaxData({
+                    url : urls.apibase + urls.queryNotifyBus,
+                    data : {
+                        fzjg : fzjg,
+                        gnid : gnid,
+                        tzlx : tzlx
+                    }
+                }, function(result) {
+                    if(typeof callback == 'function'){
+                        callback(result);
+                    }
+                }, function(data) {
+                    msgutils.showErrorMsg(data);
+
+                }));
+            };
+			/**
+			 * 初始化点击事件
+			 */
+			var iniClick = function(callback) {
+				var div = $('<div class="form-actions nobkcolor"><button   type="submit" class="btn btn-primary" style="cursor: pointer"> <i class="icon-edit"></i>下一步</button></div>');
+				div.insertAfter($(_place));
+				div.click(function() {
+					callback();
+				});
+			}
+			var check=function (fzjg, gnid, place){
+				/*if(fzjg==null || fzjg==""){
+					alert("发证机关不能为空");
+					return false;
+				}*/
+				if(gnid==null ||gnid==""){
+					alert("业务名称不能为空");
+					return false;
+				}
+				if(place.length<0){
+					alert("接收div未定义");
+					return false;
+				}
+				return true;
+			}
+			var dp = {
+				/**
+				 * 初始化业务告知
+				 */
+				iniNotifyBus : function(fzjg, gnid, place, callback) {
+					if(check(fzjg, gnid, place)){
+						queryNotifyBus(fzjg, gnid, '1', place,callback);// 查询业务告知内容
+						// iniClick(callback);// 初始化点击事件
+					}
+				},
+				queryNotifyBus : function(fzjg, gnid,tzlx, callback) {
+					queryNotifyBusData(fzjg, gnid, tzlx,callback);// 查询业务告知内容
+                },
+				/**
+				 * 申请后业务告知
+				 */
+				applyNotify : function(fzjg, gnid, place, callback) {
+					if(check(fzjg, gnid, place)){
+						queryNotifyBus(fzjg, gnid, '2', place,callback);// 查询业务告知内容
+					}
+				}
+				
+			};
+			return dp;
+		});

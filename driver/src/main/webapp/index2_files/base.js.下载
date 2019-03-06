@@ -1,0 +1,572 @@
+// AJAX 加载用户基本信息. 并渲染页头和页脚
+// HACK for IE
+if (!window.console) {
+        window.console = document.console = {
+                log: function () {
+                },
+                warn: function () {
+                },
+                error: function () {
+                }
+        };
+}
+
+function _getScriptBase() {
+        var scripts = document.getElementsByTagName('script')
+        for (var i = 0; i < scripts.length; i++) {
+                var src = scripts[i].src,
+                        idx = src.indexOf('/static');
+                if (idx > -1)
+                        return src.substr(0, idx) + '/static';
+        }
+}
+function dateFormat(format, date) {
+    date = date || new Date();
+    var o = {
+        "M+": date.getMonth() + 1, //month
+        "d+": date.getDate(), //day
+        "h+": date.getHours(), //hour
+        "m+": date.getMinutes(), //minute
+        "s+": date.getSeconds(), //second
+        "q+": Math.floor((date.getMonth() + 3) / 3), //quarter
+        "S": date.getMilliseconds() //millisecond
+    }
+
+    if (/(y+)/.test(format)) {
+        format = format.replace(RegExp.$1, (date.getFullYear() + "").substr(4 - RegExp.$1.length));
+    }
+
+    for (var k in o) {
+        if (new RegExp("(" + k + ")").test(format)) {
+            format = format.replace(RegExp.$1, RegExp.$1.length == 1 ? o[k] : ("00" + o[k]).substr(("" + o[k]).length));
+        }
+    }
+    return format;
+}
+var dateStr = dateFormat('yyyyMMdd', new Date());
+var version = "1.5.0_" + dateStr;
+
+require.config({
+        urlArgs: version,
+        baseUrl: _getScriptBase(),
+        paths: {
+                js: 'js',
+                user: 'js/user',
+                lib: 'jsthird',
+                jquery: 'jsthird/jquery-1.10.2.min',
+                jhistory: 'jsthird/jquery.history',
+                tpl: 'js/tpls',
+                url: 'js/urls',
+                ztab: 'js/jquery.ztab.0.1',
+                passstrength: "jsthird/jquery.passwordStrength",
+                btval: 'jsthird/bootstrap-validation.min',
+                ia300: 'jsthird/IA300ClientJavascript',
+                autocomplete:'jsthird/jquery-ui.min' ,
+                jsform:'jsthird/jquery.form.min',
+                moment:'jsthird/daterangepicker/moment',
+                aes:'js/aes/aes'
+
+        },
+        shim: {
+                'lib/jquery.tmpl.min': ['jquery'],
+                'lib/bootstrap.min': ['jquery'],
+                'lib/jquery.lrinfo': ['jquery'],
+                'lib/bootstrap-select.min': ['jquery', 'lib/bootstrap.min'],
+                'jhistory': ['jquery'],
+                'tpl': ['jquery', 'lib/jquery.tmpl.min'],
+                'ztab': ['jquery'],
+                'autocomplete': ['jquery'],
+                'passstrength': ['jquery'],
+                'btval': ['jquery'],
+                'jsform':['jquery'],
+                'aes':['jquery'],
+                'ia300': {
+                        exports: 'ia300'
+                    }
+        }
+});
+
+require(['jquery', 'js/tpls', 'js/urls', 'js/dpSyscode', 'js/dpIp', 'js/dpLogin', 'js/funCodeRequester', 'js/tj','js/notify','js/funcDistrict','js/aes/token','js/base64/base64'
+        // No handle functions
+        , 'lib/jquery.tmpl.min', 'lib/bootstrap.min', 'lib/bootstrap-select.min', 'js/funPlaceholder', 'btval', 'ia300','js/nc'], function ($, tpl, url, syscode, ip, reg, codereq, tj, notify,fdistrict,token,base64) {
+
+        url.scriptBase = _getScriptBase();
+
+
+
+        var uinfo = {},
+                script = $('script[data-main*="base.js"]').data('page') || $('script[data-main*="base.js"]').attr('data-page'),
+                _renderAsLogout = function (userinfo) {
+                        $('.login-pane .pane').mouseenter(function (e) {
+                            //判断一下，是不是注册须知这个pane，注册要加载注册须知
+                            var _type = $(this).data("type");
+                            if(_type&&"register"==_type){
+                                if(!$("#yhzcContent").text())//不重复加载
+                                {
+                                    notify.iniNotifyBus(uinfo.fzjg, "9015", $("#yhzcContent"), function() {
+                                    });
+                                }
+                            }
+                                // TODO 点击的同时激活第一个输入框，可以直接输入
+                                // $(this).parent().find('input[type=text]:first').focus();
+                                var $li = $(this).parent();
+                                if ($li.hasClass("open")) {
+                                        $li.removeClass('open');
+                                } else {
+                                        $li.parent().children(".open").removeClass("open");
+                                        $li.addClass('open');
+                                        $('input', $li).placeholder();
+                                        $(document).bind("click", hideLogin);
+                                }
+                                e.stopPropagation();
+                        });
+                        $(".login-pane").click(function (e) {
+                                e.stopPropagation();
+                        });
+
+                        function hideLogin(e) {
+                                $("#toptool").find(".open").removeClass("open");
+                                $(document).unbind("click", hideLogin);
+                                e.stopPropagation();
+                        }
+
+                        if (script && script.length > 0) {
+                                require([script], function (mdlPage) {
+                                        if (mdlPage) {
+                                                mdlPage.render(userinfo);
+                                        } else {
+                                                try {
+                                                        console.error('Moudle parse faile: ' + script);
+                                                } catch (error) {
+                                                }
+                                        }
+                                });
+                        }
+                        // 初始化地区选择
+                    fdistrict._initialDistrictTool();
+                        renderLogin(userinfo);
+
+                        //统计
+                        //tj.tj("index");
+                },
+                _renderAsLogin = function (userinfo) {
+                        //首页地区切换增加一个 Hover 效果
+                        $('#toptool .dropdown').mouseover(
+                                function () {
+                                        $(this).addClass('open');
+                                        $('input', $(this)).placeholder();
+                                }
+                        );
+                        $('#toptool .dropdown').mouseout(
+                                function () {
+                                        $(this).removeClass('open');
+                                }
+                        );
+                        // Load page module
+                        if (script && script.length > 0)
+                                require([script], function (mdlPage) {
+                                        if (mdlPage) {
+                                                mdlPage.render(userinfo);
+                                        } else {
+                                                try {
+                                                        console.error('Moudle parse faile: ' + script);
+                                                } catch (error) {
+                                                }
+                                        }
+                                });
+                        // Request area list
+                        syscode.getSwitchAreaList(null, function (data) {
+                                var list = $.tmpl(tpl.pageTopAreaSwitcher, {
+                                        list: data.data
+                                });
+                                $('#areaswitch').html(list.html());
+                        });
+
+                        // 初始化地区选择
+                    fdistrict._initialDistrictTool();
+
+                        ////设置上次登陆地点
+                        //ip.getIpInfo(uinfo.lastLoginIp, function (data) {
+                        //        if (!data) {
+                        //                return;
+                        //        }
+                        //        var district = "";
+                        //        if (data.province) {
+                        //                district = district + data.province;
+                        //        }
+                        //        if (data.city) {
+                        //                district = district + data.city;
+                        //        }
+                        //        if (data.isp) {
+                        //                district = district + data.isp;
+                        //        }
+                        //        if (district && district.length > 0) {
+                        //                $("#lastLoginDistrict").html("，登录IP地点：" + district);
+                        //        }
+                        //});
+
+                        tj.tj("index");
+                },
+                _checkUserLogin = function () {
+//                        if (uinfo.authenticate) {
+//                        } else {
+//                                document.location = url.loginurl;
+//                                return;
+//                        }
+                };
+        // render auto tabs
+        $('.nav-tabs-auto > li > a, .nav-pill-auto > li > a').mouseenter(function () {
+                var th = $(this);
+                th.tab('show');
+                $('input, textarea', $(th.attr('href'))).placeholder();
+        });
+        function getRightAreaHtml(flag){
+
+                var gto= "<div id='gotop' title='回到顶部'> " +
+                 "      <i class='icon-arrow-up'></i>  "+
+              "  </div>" ;
+               if(flag=='1'){
+                    gto="  <a id='feedbak'title='信息反馈' style='text-decoration:none;' target='feed_window' href='/m/showFeedBack'>"   +
+                       "   <i class='icon-edit'></i>  "     +
+                       "   </a>   "        +
+                       "   <div id='gotop' title='回到顶部'> " +
+                       "      <i class='icon-arrow-up'></i>  "+
+                       "  </div>" ;
+               }
+
+            $('body').append(gto);
+            $("#gotop").click(function (e) {
+                console.log("testing...");
+                //以1秒的间隔返回顶部
+                $('body,html').animate({
+                    scrollTop: 0
+                }, 500);
+            });
+            $("#gotop").mouseover(function (e) {
+                $(this).css("background", "#555");
+            });
+            $("#gotop").mouseout(function (e) {
+                $(this).css("background", "#000");
+            });
+            goTop();
+        };
+        // add gotop
+
+        function goTop() {
+                $(window).scroll(function (e) {
+                        //若滚动条离顶部大于100元素
+                        if ($(window).scrollTop() > 100) {
+                                $("#gotop").css('display', 'block');
+                                $(".sidebar").css('top', '20px');
+                        } //以1秒的间隔渐显id=gotop的元素
+                        else {
+                                $("#gotop").css('display', 'none');
+                                $(".sidebar").css('top', '110px');
+                        } //以1秒的间隔渐隐id=gotop的元素
+                });
+        }
+        ;
+        //登录错误显示方法
+        function showerr(input, errors, flag) {
+                input.one('focusin', function () {
+                        $(this).parent().removeClass('error');
+                        if (flag == 0)
+                                $(this).nextAll(".help-inline").remove();
+                }).parent().addClass('error');
+                input.nextAll(".help-inline").remove();
+                var target = input;
+                while (target.next("span").length > 0)
+                        target = target.next("span");
+                if (errors != null)
+                        $('<span class="help-inline">' + errors + '</span>').insertAfter(target);
+        }
+        ;
+        //渲染header上的登录
+        function renderLogin(userinfo) {
+                //如果未登录，才尝试渲染
+
+                if (!userinfo.authenticate) {
+                    //滑动模块初始化
+                    var nc = new noCaptcha();
+                    var nc_appkey = 'FFFF00000000017811F5';  // 应用标识,不可更改
+                    var nc_scene = 'login';  //场景,不可更改
+                    var nc_token = [nc_appkey, (new Date()).getTime(), Math.random()].join(':');
+                    var nc_option = {
+                        renderTo: '#header_dom_id',//渲染到该DOM ID指定的Div位置
+                        appkey: nc_appkey,
+                        scene: nc_scene,
+                        token: nc_token,
+                        callback: function (data) {// 校验成功回调
+                            //console.log(data.csessionid);
+                            //console.log(data.sig);
+                            //console.log(nc_token);
+
+                            document.getElementById('header_csessionid').value = data.csessionid;
+                            document.getElementById('header_sig').value = data.sig;
+                            document.getElementById('header_token').value = nc_token;
+                            document.getElementById('header_scene').value = nc_scene;
+                        }
+                    };
+                    nc.init(nc_option);
+
+                    var nc_option2 = {
+                        renderTo: '#header_dom_id2',//渲染到该DOM ID指定的Div位置
+                        appkey: nc_appkey,
+                        scene: nc_scene,
+                        token: nc_token,
+                        callback: function (data) {// 校验成功回调
+                            //console.log(data.csessionid);
+                            //console.log(data.sig);
+                            //console.log(nc_token);
+
+                            // document.getElementById('header_csessionid2').value = data.csessionid;
+                            // document.getElementById('header_sig2').value = data.sig;
+                            // document.getElementById('header_token2').value = nc_token;
+                            // document.getElementById('header_scene2').value = nc_scene;
+
+                            document.getElementById('header_csessionid_hide').value = data.csessionid;
+                            document.getElementById('header_sig_hide').value = data.sig;
+                            document.getElementById('header_token_hide').value = nc_token;
+                            document.getElementById('header_scene_hide').value = nc_scene;
+                        }
+                    };
+                    nc.init(nc_option2);
+
+
+                    $('form#qyjgHeaderLogin').validation({
+                            onSuccess: function () {
+                                if($("#header_csessionid_hide").val()==''){
+                                    $("#header_dom_id").css("border","2px solid #b94a48");
+                                    showerr($("#header_dom_id"), "验证码错误,请刷新页面重试！", 1);
+                                    return false;
+                                }
+                                return true;
+                            },
+                            onFaile: function () {
+                            }
+                        });
+                        $('form#gryhHeaderLogin').validation({
+                                onSuccess: function () {
+                                    var _password  = $("input[name=password]", $("form#gryhHeaderLogin")).val();
+                                    $("input[name=password]", $("form#gryhHeaderLogin")).val(base64.encode(_password));
+                                    return true;
+                                },
+                                onFaile: function () {
+                                }
+                        });
+                        var form = $("form#qyjgHeaderLogin");
+                        var toekenObj=token.gentoken();
+                        if(toekenObj!=null){
+                            $("<input type='hidden' name='"+toekenObj.md5key+"' value='"+toekenObj.md5Value+"'/>").appendTo( $("#gryhHeaderLogin"));
+                            $("<input type='hidden' name='"+toekenObj.md5key+"' value='"+toekenObj.md5Value+"'/>").appendTo( $("#login_hidden"));
+                        }
+
+                        codereq.imgCodes('form #userCaptcha', '/captcha1');
+                        codereq.imgCodes('form #unitCaptcha', '/captcha1');
+                        $('#btnQyjgdlHeader').click(function () {
+                                var input = $("input[name=username]", form);
+                                var passwd = $("input[name=password]", form);
+                                // var captcha = $("input[name=captcha]", form);
+                                var username = input.val();
+                                var password = passwd.val();
+                                // var captchaval = captcha.val();
+                                var flag = 0;
+                                if (username == "") {
+                                        flag = 1;
+                                        showerr(input, null, flag);
+                                }
+                                if (password == "") {
+                                        flag = 1;
+                                        showerr(passwd, null, flag);
+                                }
+                                // if (captchaval == "") {
+                                //         flag = 1;
+                                //         showerr(captcha, null, flag);
+                                //         return false;
+                                // } else if (captchaval.length == 0) {
+                                //         flag = 1;
+                                //         showerr(captcha, "请输入计算结果", flag);
+                                //         return false;
+                                // }
+
+                                //设置密码base64转码
+                            password  = $("input[name=password]", form).val();
+                            password =  base64.encode(password);
+                            $("input[name=password]", form).val(password);
+                            
+							if($("#header_csessionid_hide").val()==''){
+                                $("#header_dom_id2").css("border","2px solid #b94a48");
+                                return false;
+                            }
+                            // isnormal is checked
+                            if($("#isnormal",form).prop("checked")){
+                                var _hidden_form = $("#login_hidden");
+                                $("input[name=username]", _hidden_form).val(username);
+                                $("input[name=password]", _hidden_form).val(password);
+                                // $("input[name=captcha]", _hidden_form).val(captchaval);
+                                _hidden_form.submit();
+                                return false;
+                            }
+
+                                if (flag == 0) {
+                                        createElementIA300();
+                                        //DetectActiveX() 判断IA300Clinet是否安装
+                                        var create = DetectIA300Plugin();
+                                        if (create == false) {
+                                                flag = 1;
+                                                showerr(input, '数字证书插件未安装!', flag);
+                                                return;
+                                        }
+                                        var retVal = IA300_CheckPassword('24680!#%&(tmri');
+                                        /*if (retVal != 0) {
+                                         alert("验证IA300用户密码失败，错误码:" + IA300_GetLastError());
+                                         }*/
+                                        var uid = IA300_GetHardwareId();
+                                        if (uid == "") {
+                                                flag = 1;
+                                                showerr(input, '获取数字证书硬件失败!', flag);
+                                                return;
+                                        }
+                                }
+                                $("input[name=szzsid]", form).val(uid);
+                                reg.checkKeyHttps(
+                                        {
+                                                u: $("input[name=username]", form).val(),
+                                                t: $("input[name=usertype]", form).val(),
+                                                p: $("input[name=password]", form).val(),
+                                                s: $("input[name=szzsid]", form).val(),
+                                                captcha: $("input[name=captcha]", form).val(),
+                                                csessionid: $("#header_csessionid_hide").val(),
+                                                sig: $("#header_sig_hide").val(),
+                                                token: $("#header_token_hide").val(),
+                                                scene: $("#header_scene_hide").val()
+                                        },
+                                        function (data) {
+                                                var random = data.data;
+                                                //进行客户端摘要的计算，randomMessageFromServer为随机数，可随机长度
+                                                var ClientDigest = IA300_CalculateClientHash(random);
+                                                $("input[name=ticket]", form).val(ClientDigest);
+                                                form.submit();
+                                        },
+                                        function (data) {
+                                                if (data.code) {
+                                                        var input2 = input;
+                                                        if (data.data.code == -5) {
+                                                            //input2 = $("input[name=captcha]", form);
+                                                            input2 = $("#header_dom_id2");
+                                                            $("#header_dom_id2").css("border", "2px solid #b94a48");
+                                                            data.data.msg +=",请刷新页面重试！";
+                                                        }
+                                                        else if (data.data.code == -3) {
+                                                            input2 = $("input[name=password]", form);
+                                                        }
+                                                        flag = 1;
+                                                        showerr(input2, data.data.msg, flag);
+                                                }
+                                        }
+                                );
+                        });
+
+                }
+        }
+        ;
+        //点击回到顶部的元素
+        $(function () {
+         //实现回到顶部元素的渐显与渐隐
+            $.ajax(url.ajaxData({
+                url: url.getFeedBackConfig, // 这个不调用apibase，默认域名
+                success: function (data) {
+                    getRightAreaHtml(data.message);
+
+                },
+                error: function () {
+                    getRightAreaHtml("0");
+                },
+                comlete: function () {
+                }
+            }));
+
+
+        });
+//        // Setup active menu item
+//        var pathname = document.location.pathname.replace(/^(.+)\.html(?:[#\?].*)*/, '$1');
+//        if (pathname == '/views/noticeresult' || pathname == '/views/noticestatic' || pathname == '/views/map-monitor' || pathname == '/views/map-fake') {
+//                pathname = '/views/notice';
+//        }
+//        if (pathname == '/') {
+//                $('a:first', $('#mainnav')).parent().addClass('active');
+//        } else {
+//                var menu = $('a[href*="' + pathname + '"]', $('#mainnav'));
+//                // noticeresult
+//                if (menu.length > 0)
+//                        $('a[href*="' + pathname + '"]', $('#mainnav')).parent().addClass('active');
+//        }
+
+        // request user base information
+        $.ajax(url.ajaxData({
+                url: url.userinfo, // 这个不调用apibase，默认域名
+                success: function (data) {
+                        if (data.code != 200) {
+                                return _renderAsLogout(null);
+                        }
+                        // 对用户数据预处理
+                        uinfo = data.data;
+
+                        //用服务端配置覆盖本地
+//                        if (uinfo.domain && uinfo.domain != "null") {
+//                                url.apibase = uinfo.domain;
+//                                url.siteurl = uinfo.domain;
+//                        }
+                        if (uinfo.loginDomain && uinfo.loginDomain != null) {
+                                url.loginDomain = uinfo.loginDomain;
+                        } else {
+                                url.loginDomain = uinfo.domain;
+                        }
+                        uinfo.fzjgShort = (/^WJ/i).test(uinfo.fzjg) ? 'WJ' : (uinfo.fzjg || '').substr(0, 1);
+                        uinfo.apiLogout = url.apibase + url.logout;
+                        uinfo.apiLogin = url.apibase + url.login;
+                        uinfo.urlCurrent = document.location.href;
+
+//                        uinfo.siteurl = url.siteurl;
+//                        uinfo.userhomeurl = url.siteurl + url.userhomeurl(uinfo.yhlx, uinfo.dwsx);
+
+                        uinfo.logouturl = url.logouturl;
+
+                        // 用户登录检测. 由于不确定最终用户目录结构, 手动触发检测和跳转
+                        uinfo.checkLogin = _checkUserLogin;
+                        var progress = [],
+                        // 不同级别对应的不同描述
+                                words = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+                        for (var i = 0; i < 12; i++) {
+                                if (i < uinfo.scrocs) {
+                                        progress.push(true);
+                                } else {
+                                        progress.push(false);
+                                }
+                        }
+                        uinfo.progress = progress;
+                        uinfo.words = words[uinfo.scrocs];
+
+                        $(document.body).data('userinfo', uinfo);
+                        // check if user if logined
+                        if (!uinfo.authenticate) {
+                                return _renderAsLogout(uinfo);
+                        }
+
+                        return _renderAsLogin(uinfo);
+                },
+                error: function () {
+                        _renderAsLogout({
+                                checkLogin: _checkUserLogin,
+                                apiLogout: url.apibase + url.logout,
+                                apiLogin: url.apibase + url.login,
+                                urlSite: url.siteurl,
+                                urlCurrent: document.location.href
+                        });
+                },
+                comlete: function () {
+                }
+        }));
+
+
+});

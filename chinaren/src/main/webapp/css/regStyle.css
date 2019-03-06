@@ -1,0 +1,427 @@
+@charset "utf-8";
+/* Sohu Bai Style Sheet
+ * Page: Register
+ * Author: Qian Cheng
+ * Copyright: Sohu.com Inc.
+ */
+body.root-blankBody{ background:#F1F5C7 url(i/reg/indexBgReg.png) repeat-x;}
+body.root-chinaren{ background:#EFF4C0 url(i/reg/indexBg.png) repeat-x;}
+
+#pageBd{background:none;}
+#pageBdMid{background:none;}
+#pageBdInt{background:none;}
+#canvasInt{ text-align:left;}
+
+
+/* regIndex */
+.regBg{ background:url(i/reg/regIntBg.jpg) 197px bottom no-repeat; padding-bottom:18px; margin:0 0 0 40px;}
+.regIntBg{ width:842px; min-height:510px;_height:510px; background:url(i/reg/regBg.jpg) no-repeat top; position:relative; padding-top:1px;}
+.regIntS{ background:url(i/reg/regS.jpg) bottom no-repeat; width:518px; height:120px; bottom:-10px; position:absolute; left:205px; z-index:10;_background:none}
+.regBox{width:518px;height:auto;margin:64px 0 0 205px; position:relative;z-index:11; zoom:1;}
+/* regBg large */
+.regBg-l{ background:url(i/reg/regIntBg_l.jpg) 155px bottom no-repeat; padding-bottom:18px; margin:0 0 0 40px;}
+.regBg-l .regIntBg{ width:842px; min-height:510px;_height:510px; background:url(i/reg/regBg_l.jpg) no-repeat top; position:relative; padding-top:1px;}
+.regBg-l .regIntS{ background:url(i/reg/regS_l.jpg) bottom no-repeat; width:600px; height:120px; bottom:-10px; position:absolute; left:163px; z-index:10;_background:none}
+.regBg-l .regBox{width:600px;height:auto;margin:65px 0 0 163px; position:relative;z-index:11; zoom:1;}
+
+.regTitle{ padding:20px 10px 0 55px; position:relative; clear:both}
+.regTitle h1{ font-size:14px; margin:0 0 8px 0;}
+.regTitle a{ margin:0 5px;}
+.regTitle a.skip{ position:absolute; top:20px; right:25px; color:#6899b9;}
+.regContent{ padding:5px;}
+.msnPic{ width:461px;height:130px; background:url(i/reg/msnPic.jpg) no-repeat; margin:10px auto;}
+.msnInput{ padding:15px 0 0 20px;}
+.msnInput dl.fieldset dd.largeHeight { padding-bottom:40px;}
+.msnInput .msg-failed{ margin-right:20px; margin-top:-30px; zoom:1;}
+.msnInput input.text,.msnInput input.password{ width:168px;}
+.msnInput .radioBox{ padding:0 0 7px 105px ;}
+.msnInput .radioBox label{ margin-right:15px;}
+
+.i-pw{ background:url(i/reg/i-pw.gif) no-repeat; margin:0 3px 0 -3px;}
+.tooltipInt, .tooltip-top .tooltipInt{*padding-top:10px;_padding-top:12px;}
+/* msnResult */
+.flBox{margin:10px 3px;background:#fff;}
+.flTop{height:25px;color:#666; padding-left:13px;}
+.flTop input{margin:1px 5px 0 20px;vertical-align:middle}
+.flTop label{}
+.flBox ul{display:block;width:auto;height:210px;overflow-y:scroll; overflow-x:hidden;margin:0;border-top:0px}
+.flBox li{list-style-position:outside;list-style-type:none;display:block;width:auto;height:58px;line-height:58px;margin:0 5px 0 10px; padding:4px 0 4px 0; background:#fff; border-bottom:1px dotted #bebebe;}
+.flBox li input,.flBox li img.avatar-48,.flBox li div{display:block;float:left;}
+.flBox li img.avatar-48{ margin-right:10px;}
+.flBox li span{display:block;float:right;width:200px;color:#999; height:25px;  }
+.flBox li input{margin:20px 5px 0 12px;display:inline;color:#333}
+.flBox li div{margin-left:10px;color:#333;overflow:hidden; width:170px; }
+.flBox .regFriendList{border:1px solid #CFDFE8; margin:0 10px 20px 10px;zoom:1;}
+.flBox .regFriendList li{ _display:inline; width:60px; height:100px; text-align:center; float:left; border:none; line-height:180%; color:#C93301;}
+.flBox .regFriendList li label{ cursor:pointer; height:77px; display:block; overflow:hidden;}
+.flBox .regFriendList li input{margin:5px 5px 0 20px;display:inline;color:#333;cursor:pointer;}
+#unRegFriendList{ margin:0 10px;border:1px solid #cfdfe8;zoom:1;}
+#unRegFriendList ul{ height:135px;}
+#unRegFriendList li{ height:25px; line-height:25px;}
+#unRegFriendList li input{margin:8px 5px 0 12px;display:inline;color:#333}
+#unRegFriendList li div{ height:20px;}
+.flBoxBtn{ margin:10px;}
+
+/* upload */
+.regDonetip{ width:430px;height:57px; background:url(i/reg/regDoneTip.jpg) no-repeat; margin:8px 0 0 12px; float:left; _display:inline; padding:15px 0 0 65px;}
+.regDonetip h1{ color:#c30; margin:0 0 3px 0; font-size:10pt;}
+.regDonetip p{ color:#333}
+.uploadBtn{ margin:10px 0;}
+.uploadBox{width:516px; height:285px;background:url(i/reg/uploadImg1.gif) center 20px no-repeat;}
+.uploadSwf{height:auto;margin-left:-4px; margin-bottom:10px;width:514px;}
+.uploadSwfBox{ margin:5px 0 0 -3px;}
+/* status */
+.statusContent{ padding:5px 15px;}
+.selectBox { margin:5px 0;}
+.selectBox .selectBorder{ width:136px; height:136px; border:1px solid #cdcdcd; padding:1px; background:#fff; margin:5px;}
+.selectBox .selectImg{ background-image:url(i/reg/statusImg.jpg); background-repeat:no-repeat; width:136px; height:136px; }
+.selectBox h3{ width:140px; display:block; text-align:center; margin:5px 0;font-size:14px; position:absolute; top:150px; left:7px;}
+.selectBox p{ width:140px; text-align:center; position:absolute; top:180px; left:7px;}
+.selectBox .student,.selectBox .job,.selectBox .other{ _display:inline; width:150px; height:210px; float:left;position:relative; margin-right:5px; cursor:pointer;}
+.selectBox .cur .selectBorder{ width:136px; height:136px; border:none; padding:7px; background:url(i/reg/statusImg.jpg) 0 0; margin:0;}
+.selectBox .over .selectBorder{ width:136px; height:136px; border:none; padding:7px; background:url(i/reg/statusImg.jpg) 0 0; margin:0;}
+.selectBox .student .selectImg{ background-position:-7px -150px }
+.selectBox .job .selectImg{ background-position:-7px -7px}
+.selectBox .other { margin-right:-5px;}
+.selectBox .other .selectImg{background-position:-7px -300px}
+
+.formBox{ margin:0 0 10px 0; padding:10px 0;}
+.formBox hr.line-dotted{ margin-bottom:20px;}
+.formBox dl.fieldset{ margin-left:-30px; }
+.formBox dl.fieldset dd{ padding-left:12px; margin-right:-12px; position:relative;}
+span.required{color:#FF0066;cursor:help; font-family:Arial; margin-left:-10px; margin-right:2px;_display:inline;}
+.radios label{ margin-right:10px;}
+.formBox input.text{width:274px;}
+select.select-s{ width:65px;}
+select.select-m{ width:100px;}
+select.select-l{ width:178px;}
+.formBox span.button{ margin-right:10px;}
+dl.fieldset dd.formBtn{ padding-top:10px;}
+
+.selectSchool select.select{ _display:inline; float:left; margin-right:8px;}
+dl.fieldset dd.selectSchool  .selector{ width:142px;}
+.formBox #schoolName{ width:137px;_width:117px}
+#companyName{width:195px;}
+/* mail */
+.mailBox{ _display:inline; width:310px; margin:65px 20px 65px 30px; padding:0 0 0 125px; background:url(i/reg/mailImg_s.jpg) no-repeat; line-height:200%; float:left;}
+.mailBox h3{ font-size:16px; color:#4C8C0E}
+.mailBox span.button{ margin-bottom:40px;}
+.mailBox strong{ margin:0 5px; font-size:14px;}
+.mailBox b{ margin:0 5px; font-weight:bold; color:#f00}
+.mailBox div.msg{ position:absolute; top:10px;}
+.mailBox p{ margin-bottom:10px;}
+.regBack{ background:url(i/reg/welcome.jpg) no-repeat 10px 0;}
+.regBack .regBack{ background:none;}
+.rSend{ border-top:1px dotted #ccc; padding:10px 0 0;}
+.rSend h4{ background:url(i/reg/rSendImg.gif) no-repeat 0 5px; padding-left:25px;}
+.rSend ul{ padding:5px 0 5px 25px; margin:0;}
+.rSend ul li{ list-style-position:inside; list-style-type:square;}
+/* friend */
+.friendContent{ margin:5px 30px;}
+ul.regFriend{ padding-left:10px; margin-right:-10px;}
+ul.regFriend li.friendItem{ margin-right:19px;}
+.friendInfo a.act{ margin:0 -1px 0 -3px; zoom:1;}
+.regFoot{ padding-bottom:10px; text-align:center;}
+
+/* regIndexBox */
+.regIndexBox{ margin:30px 10px 30px 10px}
+.regIndexBox dl.fieldset dd{ padding-left:12px; margin-right:-12px; position:relative; margin-bottom:5px; width:60%}
+.regIndexBox dl.fieldset dd div.tipsErr i a{ text-decoration:underline}
+.regIndexBox dl.fieldset dd div.tipsErr i a:hover{ text-decoration:none;}
+.regIndexBox input.text_s{ width:59px;}
+.regIndexBox input.text_m{ width:150px;}
+.regIndexBox input.text_l{ width:80px;}
+.regIndexBox input.textVcode{ width:45px}
+.regIndexBox .codeImg{height:24px; margin:0 5px; vertical-align:middle}
+.regIndexBox a.reImg{ display:block; margin-left:70px; width:8em;}
+.regBtn{ margin:5px 0 10px 0}
+.regInfo{ width:auto; height:30px; position:absolute; bottom:0; left:20px;}
+.regInfo .msg{background-color:#EDF4FA; background-position:10px 4px;_background-color:#fff;_color:#999;}
+.regIndexBox .regTxt{border: 1px solid #bbb; padding: 10px; background:#f6f6f6; display: block; width: 350px; height: 80px;*height:75px;overflow-y: auto; margin-top:5px; margin-left:-60px; position:relative;}
+
+/* selectMsn */
+.selectBtn{ height:24px; line-height:24px; background:url(i/reg/accountBtnBg.gif) no-repeat right -2px; display:inline-block;*display:inline;*zoom:1; padding:0 20px 0 5px; cursor:pointer;}
+.selectOver{ height:24px; line-height:24px; background:url(i/reg/accountBtnBg.gif) no-repeat left -32px; display:inline-block;*display:inline;*zoom:1; padding:0 0 0 5px; cursor:pointer;}
+.selectOver span{ padding-right:20px; background:url(i/reg/accountBtnBg.gif) no-repeat right -32px;display:inline-block;*display:inline;*zoom:1; height:24px;}
+dt.accountBox{ position:relative;}
+.accountBox .accountList{ width:auto; height:auto; border:1px solid #d7d7d7; position:absolute; top:27px; left:2px; z-index:100; background:#fff; text-align:left;display:none;}
+.accountBox .accountList a{ padding:0 10px;display:block; background:#f5f5f5; color:#666;}
+.accountBox .accountList a:hover{ background:#fff; text-decoration:none;}
+.regContent div.meta{ text-align:center;}
+.regContent .dropList div.meta{text-align:left;}
+/* intWati */
+.invWati{width:auto;text-align:left;padding-top:25px;padding-bottom:50px;margin:10px 10px 0 0;background:url(i/reg/load-page.gif) no-repeat left top;}
+
+/* tips */
+.tipsIcon{ width:20px; height:18px; line-height:18px; text-align:center; position:absolute; top:3px; left:177px;}
+.tipsIcon span{ display:block; width:100%; height:100%;}
+.tips-pending{ background:url(i/reg/pending.gif) 5px 6px no-repeat; padding:3px 3px 3px 0px; color:#CB9A00; line-height:200%;}
+.tips0{ width:185px; height:auto; background:url(i/reg/tip1_Bottom.png) bottom left no-repeat; position:absolute; top:0; left:205px;}
+.tips0 i{ background:url(i/reg/tip1_top.png) top left no-repeat; display:block; width:160px; padding:5px 5px 5px 20px; font-style:normal; color:#999;}
+.tips1{ width:185px; height:auto; background:url(i/reg/tip1_Bottom.png) bottom left no-repeat; position:absolute; top:0; left:205px;}
+.tips1 i{ background:url(i/reg/tip1_top.png) top left no-repeat; display:block; width:160px; padding:5px 5px 5px 20px; font-style:normal;}
+.tips2{ width:185px; height:auto; background:url(i/reg/tip2_Bottom.png) bottom left no-repeat; position:absolute; top:0; left:205px;}
+.tips2 i{ background:url(i/reg/tip2_top.png) top left no-repeat; display:block; width:160px; padding:5px 5px 5px 20px; font-style:normal; color:#f33;}
+.formBox .tipsIcon{ width:20px; height:18px; line-height:18px; text-align:center; position:absolute; top:3px; left:177px; margin-left:40px;}
+.formBox .tips2{ width:145px; height:auto; background:url(i/reg/tip2_Bottom_s.png) bottom left no-repeat; position:absolute; top:0; left:205px;margin-left:40px;}
+.formBox .tips2 i{ background:url(i/reg/tip2_top_s.png) top left no-repeat; display:block; width:120px; padding:5px 5px 5px 20px; font-style:normal; color:#f33;}
+.i-msn{ background:url(i/reg/i-msn.gif) no-repeat; margin:0 3px;}
+
+/* 密码强度 */
+.pwd-none,.pwd-low,.pwd-hit,.pwd-high{ background:url(i/reg/pwd.gif) no-repeat; margin:0 10px 0 0; width:150px; display:block;padding:0 5px 5px 0px;}
+.pwd-low{ background-position:0 19px; color:#F7290C}
+.pwd-hit{ background-position:0 -11px; color:#FF7C00}
+.pwd-high{ background-position:0 -39px; color:#72AA00;}
+.pwd-none{ background-position:0 -71px; color:#999;}
+
+#pageFt{ padding-left:55px;}
+
+/* msn 选择器 */
+.regIndexBox .selector{ display:inline-block;*display:inline;*zoom:1; width:158px;}
+.regIndexBox .selector .dropList li{ display:block; width:142px;}
+.regIndexBox dl.fieldset dd .selector{ float:none; display:inline-block;*display:inline;*zoom:1;}
+
+.msnInput .selector{ display:inline-block;*display:inline;*zoom:1; width:175px;}
+.msnInput .selector .dropList li{ display:block; width:159px;}
+.msnInput dl.fieldset dd .selector{ float:none; display:inline-block;*display:inline;*zoom:1;}
+
+/* page-regIndex090821 */
+
+.page-regIndex090821 .regBg{ background:url(i/reg/regBgBottom090821.jpg) 0 bottom no-repeat; padding-bottom:215px; margin:0 0 -120px 0;}
+.page-regIndex090821 .regIntBg{min-height:510px;_height:510px; background:url(i/reg/regBgTop090821.jpg) no-repeat top; position:relative; padding-top:1px; width:100%; margin:0;}
+.page-regIndex090821 .regIntS{ background:none}
+.page-regIndex090821 .regBox{height:auto;margin:160px 0 0 195px; position:relative;z-index:11; zoom:1;}
+.page-regIndex090821 .regTitle{ padding:0; color:#999;}
+.page-regIndex090821 dl.fieldset dt{ font-size:14px; padding-top:5px;*padding-top:10px;_margin-left:-110px;_width:110px;}
+.page-regIndex090821 ol.tokenList{ width:230px;}
+.page-regIndex090821 .input.blank,.page-regIndex090821  input.password,.page-regIndex090821  input.text{ font-size:16px; padding:6px 3px 9px 3px; height:20px;}
+.page-regIndex090821 .regIndexBox input.text_m{ width:230px;}
+.page-regIndex090821 .regIndexBox{ margin:30px 10px 30px -10px}
+.page-regIndex090821 .tipsIcon,.page-regIndex090821 .tips0,.page-regIndex090821 .tips1,.page-regIndex090821 .tips2{ margin-left:75px;}
+.page-regIndex090821 ol.tokenList li input{ padding:5px 0 8px 0;}
+.page-regIndex090821 .regIndexBox input.textVcode{ width:60px}
+.page-regIndex090821 .regIndexBox .codeImg{ vertical-align:top;}
+.page-regIndex090821 .regIndexBox a.reImg{margin-left:80px;margin-top:-15px;}
+.page-regIndex090821 .regInfo .msg{background-color:#fff; }
+.page-regIndex090821 .selectBtn,.page-regIndex090821 .selectOver{margin-left:-2px;}
+.page-regIndex090821 .accountList{ font-size:12px;}
+/* 090827 add */
+.invTip{clear:both;position:relative;width:auto;height:30px;padding:0;margin:-10px 0 0;z-index:1;}
+/* 090924 edit */
+.page-regIndex090821 .tips2,.page-regIndex090821 .tips0{ margin-left:50px;}
+.page-regIndex090821 .formError{ background:none;}
+.page-regIndex090821 input.textErr{ border-color:#F70515;background:#FFCFCF;}
+.tips0 i{ color:#666;}
+.tipsErr{ width:185px; height:auto; background:url(i/reg/tipErr_Bottom.png) bottom left no-repeat; position:absolute; top:0; left:205px;}
+.tipsErr i{ background:url(i/reg/tipErr_top.png) top left no-repeat; display:block; width:160px; padding:5px 5px 5px 20px; font-style:normal; color:#f33;}
+
+/* 1015 */
+.regDone{ margin:50px 10px 20px 50px; background:url(i/reg/welcome.jpg) left top no-repeat; padding:5px 5px 20px 120px;}
+.regDone h2{ font-size:16px; color:#327B00; margin:5px 0 10px 0;}
+.regDone p strong{ color:#333; margin:0 5px; font-size:16px;}
+.regDone .regEnter{ margin:40px 0 0 -160px; text-align:center}
+.regIndexBox input.text_s{ width:152px;}
+dl.fieldset_s .tips-pending{padding-left:25px;}
+/* 1225 */
+.regDone1225{ background:none; padding:10px; font-size:14px;}
+.regDone1225 h2{ padding:10px 10px 10px 65px; background:url(i/reg/welcome_s.jpg) no-repeat left center; margin-bottom:30px; zoom:1;}
+.regDone1225 p{color:#333; margin-bottom:15px;}
+.regDone1225 .regEnter{ margin-left:0; text-align:left}
+
+
+/* send mail  091102*/
+.mailBlock{ padding:50px 20px 20px;}
+.mailBlock h3{ height:55px; line-height:55px;font-size:16px; color:#4C8C0E; padding-left:130px; background:url(i/reg/mailImg_s.jpg) left center no-repeat; margin:0 40px 20px 40px ;}
+.mailExt{ background:url(i/reg/or-line.gif) top repeat-x;}
+.mailC{background:url(i/reg/or.gif) center 2px no-repeat;}
+.mailInt{ background:url(i/reg/or-line.gif) bottom repeat-x; padding:10px;}
+.mailBLeft{ float:left; width:40%; padding:10px 10px 10px 20px;}
+.mailBRight{ float:right; width:38%;padding:10px 0 10px 0px;}
+.mailInt span.button{ margin-bottom:15px;}
+.mailInt p{ line-height:200%}
+.rSend{ border:none;padding:40px 10px  10px;}
+
+/* qq */
+.tipsQQ{ width:185px; height:auto; background:url(i/reg/tip2_Bottom.png) bottom left no-repeat; position:absolute; top:0; left:205px;margin-left:50px;}
+.tipsQQ i{ background:url(i/reg/tip2_top.png) top left no-repeat; display:block; width:160px; padding:5px 5px 5px 20px; font-style:normal; color:#CB9A00;}
+.formBox .tipsQQ{ width:145px; height:auto; background:url(i/reg/tip2_Bottom_s.png) bottom left no-repeat; position:absolute; top:0; left:205px;margin-left:40px;}
+.formBox .tipsQQ i{ background:url(i/reg/tip2_top_s.png) top left no-repeat; display:block; width:120px; padding:5px 5px 5px 20px; font-style:normal; color:#f33;}
+.tipsQQ i span{ display:inline-block;*display:inline;*zoom:1; width:16px; height:16px;background:url(i/reg/pending.gif) no-repeat; vertical-align:middle; margin-right:5px;}
+
+.mailM{ border-top:1px dotted #ccc;border-bottom:1px dotted #ccc;padding:15px 10px 15px 20px;*padding-right:5px;_padding-right:10px;}
+.mailM b{ font-size:18px; font-weight:bold; margin:0 3px;}
+.mailM p{ line-height:200%;}
+.mailM span.button{ margin:15px 0 0}
+.rSendMailM{ padding:5px 10px 10px 30px;}
+.rSend h4{ background:url(i/reg/rSendImg.gif) no-repeat 0 2px;*background:url(i/reg/rSendImg.gif) no-repeat 0 0px;_background:url(i/reg/rSendImg.gif) no-repeat 0 2px;padding-left:25px;}
+
+.tooltip{ float:left; clear:both;}
+.msnInput .dropWrap{ position:absolute; top:25px; left:0;}
+
+.regAvatar{ width:125px; height:146px; background:url(i/reg/avatarNone.gif) no-repeat; float:left; margin:10px 10px 20px 0}
+.updateLoad{ float:left; padding-top:10px; padding-bottom:15px;width:70%}
+.uploadBox{ display:none;}
+/* res user */
+.resBox{ padding:5px;}
+.resBox h4{ font-weight:normal; padding:10px 5px 7px 23px; background:url(i/reg/ruImg.gif) left center no-repeat;}
+.resBox h4 strong{ color:#FE9A00; font-weight:700; padding:0 6px;}
+.resBox h4 span{ margin:0 7px;}
+.resBox .load-page{ height:196px}
+.resAddress,.resSchool,.resCompany{border-top:1px dotted #ccc;padding-bottom:20px}
+.resBox .listEmpty{ padding:30px 20px;}
+.resBox ul{ padding:0; list-style-type:none;margin:0;}
+.resBtnBox{ padding:15px; text-align:center;border-top:1px dotted #ccc;}
+.formBox dl.fieldset{ margin-left:0px; }
+.formBox dl.fieldset dd{ z-index:1;}
+
+
+.ruItem{float:left;padding:7px 6px;text-align:center;}
+	.ruItem a{display:block;overflow:hidden;position:relative;width:60px;height:84px;padding:0 4px;outline:none;background:#fff;color:#666;cursor:pointer;}
+		.ruAvatar{display:block;overflow:hidden;position:relative;z-index:1;width:48px;height:48px;padding:10px 6px 5px;}
+			.ruAvatar img{width:48px;height:48px;padding:0;border:0;background:none;}
+		.ruName input.checkbox{ position:absolute; bottom:3px; left:5px;*left:0;*bottom:0;}
+		.ruName{display:block;overflow:hidden;position:relative;z-index:3;width:3em;padding-left:22px;height:20px;text-overflow:ellipsis;-o-text-overflow:ellipsis;white-space:nowrap\9;}
+		.ruStatus{display:block;position:absolute;top:0;left:0;z-index:2;width:68px;height:84px;background:url(i/reg/friendSelector.gif) no-repeat;}
+	.ruItem a:hover{background:#d4e2eb;text-decoration:none;}
+		.ruItem a:hover .ruStatus{background-position:-100px 0;}
+.ruItem-selected{}
+	.ruItem-selected a{background:#5b92b0;color:#fff;}
+		.ruItem-selected a .ruStatus,
+		.ruItem-selected a:hover .ruStatus{background-position:-200px 0;}
+
+
+
+.rSend{ border-top:1px dotted #ccc; padding:10px 0 0;}
+
+.regContent{ padding-top:15px;}
+.regSohuTip { background:#FAFEEF; border:1px solid #F6E5AD; padding:7px 10px; width:90%; margin:0 auto;zoom:1;}
+.regMailTip { background:#FAFEEF; border:1px solid #F6E5AD; padding:7px 0 7px 10px; width:105%; margin:0 auto;zoom:1;}
+
+
+/* cr reg */
+
+.regIndexBox input.text_s{width:137px; margin-right:3px;}
+/* cr index */
+.crIndexBgExt{ width:915px;margin:10px auto;background:url(i/reg/index.png) 0 0 no-repeat;}
+.crIndexBg{}
+.crIndexBgInt{position:relative;padding-left:315px;zoom:1;}
+#indexLogo{position:absolute;top:4px;left:4px;width:287px;height:100px;background:url(i/reg/indexLogo.gif) center bottom no-repeat}
+
+#indexContent{overflow:hidden;position:absolute;top:120px;left:4px;width:287px;height:520px;}
+	#indexWel{height:24px;margin:0 0 10px;font:14px/24px Verdana,Geneva,sans-serif;text-align:center;}
+	#indexLoginOld,
+	#indexLogin{position:relative;padding:28px 30px 10px;border:1px dashed #F4E5BB;border-width:1px 0;background:#FFFEF3 url(i/reg/indexLogin.png) 0 -50px repeat-x;zoom:1;}
+		.indexPs{position:absolute;top:0;right:10px;width:68px;height:22px;background:url(i/reg/indexLogin.png) 0 0 no-repeat;text-align:center;}
+			.indexPs a{display:block;width:66px;height:20px;padding:0 0 2px 2px;color:#fff;text-decoration:none;line-height:20px;}
+		.passportc{}
+			.passportc .pptitle{display:none;}
+			/* 登录前 */
+			.passportc .ppcontent{}
+				.passportc .error{padding-left:45px;color:#f30;line-height:18px;}
+					.passportc .error a{text-decoration:underline;}
+				.passportc ul.card{margin:0;padding:0;list-style:none;}
+					.passportc ul.card li{position:relative;height:25px;*height:auto;_height:25px;padding:5px 0;font-size:14px;letter-spacing:6px;zoom:1;}
+						.passportc input.ppinput{width:158px;height:16px;margin:0 0 0 5px;*margin:0 0 2px 10px;_margin:-2px 0 0 8px;padding:3px;border:1px solid #ddd9af;background:#fff;color:#333;font:12px/16px Verdana,Geneva,sans-serif;vertical-align:middle;}
+						.indexPa{position:absolute;top:5px;right:2px;width:96px;height:22px;font-size:12px;letter-spacing:0;}
+							.indexPaBtn{height:20px;padding:1px 5px;border:1px solid #ddd9af;background:#eee url(i/reg/indexLogin.png) 100% -25px repeat-x;cursor:pointer;}
+							.indexPaList{display:none;position:absolute;top:23px;left:0;width:94px;margin:0 !important;border:1px solid #ddd9af;background:#fff;list-style:none !important;}
+								.indexPaList li{height:auto !important;padding:0 !important;font-size:12px !important;letter-spacing:0 !important;}
+									.indexPaList li a{display:block;height:20px;padding:1px 5px;color:#666; text-decoration:none;line-height:20px;}
+									.indexPaList li a:hover{background:#f3f3f3;}
+					.passportc dt{height:24px;padding:2px 13px 0 46px;padding:2px 13px 0 45px\9;*padding:10px 13px 0 45px;font-size:12px;letter-spacing:0;zoom:1;}
+					.passportc dt:after{content:"\0020";display:block;visibility:hidden;clear:both;height:0;}
+						.passportc dt span{float:right;height:24px;padding:0 20px 10px 0;}
+							.passportc dt span input{margin-right:3px;*margin-right:0;vertical-align:middle;}
+						.passportc input.sign{width:49px;height:24px;border:0;background:url(i/reg/button-login.gif) no-repeat;color:#fff;vertical-align:middle;cursor:pointer;}
+					.passportc dd{display:none;}
+						.passportc dd a{margin:2px;color:#fff;}
+			/* 下拉提示 */
+			.ppselecter{overflow:hidden;width:166px;margin-left:1px;border:1px solid #669bb7;background:#fff;color:#666;font-family:Verdana,Geneva,sans-serif;cursor:default;}
+				.ppselecter .ppseltit{padding:0 4px;background:#eee;color:#999;}
+				.ppselecter td{padding:0;border:0;}
+				.ppselecter td td{padding:1px 4px 2px;}
+				.ppselecter .active{background:#669cb6;color:#fff;cursor:pointer;}
+			/* 登录中 */
+			.ppWaitMsg{overflow:hidden;_height:100px;min-height:100px;background:url(i/reg/loading.gif) no-repeat center;text-indent:-9999px;}
+			/* 登录后 */
+			.passportc .listContA{}
+				.passportc .listContA ul{margin:none;list-style:none;}
+			.passportc .middle,
+			.passportc .bottom,
+			.passportc .candle{display:none;}
+		.passreset{clear:both;text-align:center;padding:3px 0;_padding:0 0 3px;}
+			.passreset a{color:#6a97ae;}
+	#indexLoginOld{padding:28px 20px 10px;}
+		#indexLoginOld .passportc ul.card li{letter-spacing:0;}
+		#indexLoginOld .passportc input.ppinput{width:190px;*width:185px;}
+		#indexLoginOld .passportc dt span{padding:0 38px 10px 0;}
+	#indexHelp{height:40px;padding:5px 65px;}
+		#indexHelp a{color:#6a97ae;}
+		#forgotPassword a{color:#CE935B;}
+	#indexReg{padding:20px 0;text-align:center;font-family:'宋体';}
+		#indexReg p{margin:0 0 15px;}
+		#indexReg .button-reg{display:block;width:100px;height:36px;margin:0 auto;background:url(i/reg/button-reg.gif);color:#fff;font:700 14px/36px Verdana,Geneva,sans-serif;}
+		#indexReg .button-reg:hover{text-decoration:none;}
+	#indexSigned{padding:10px 10px 30px 25px;border-bottom:1px dashed #b5d4e7;}
+		#indexSigned h3{margin:0 0 12px;font-weight:400;line-height:22px;}
+			#indexSigned h3 strong{font-weight:700;}
+		#indexSigned .button{margin:0;}
+		#indexSigned p{padding:6px 0 0 0;}
+	.crNews{padding:30px !important;}
+
+#indexShow{padding:11px 7px;}
+#indexNews{width:583px;height:149px;background:url(i/reg/indexImg.jpg) no-repeat; margin-bottom:10px;}
+#indexSearch{width:493px;height:62px; background:url(i/reg/indexSearch.png) no-repeat;padding:14px 0 0 93px}
+#indexSearch input.text{ width:285px;}
+#indexCrMap{width:579px;height:505px; padding:1px; border:1px solid #EFEFEF;}
+.indexDiviLine{overflow:hidden;width:100%;height:0;margin:5px 0;border-top:1px dashed #EED9AE;border-bottom:1px dashed #fff;}
+
+#toOld{color:#E7E2CE}
+#toOld a{color:#CE935B;}
+
+/* recoverPwd */
+.d-recoverPwd{color:#A7896B;}
+.d-recoverPwd .dCt{border:1px solid #F3DC9D}
+.d-recoverPwd .dHd{ background:#FFF4D6; border:none;color:#7D654E;}
+.d-recoverPwd a.i-close{ background:url(i/recoverPwd/close.gif) 0 0 no-repeat;}
+.d-recoverPwd a.i-close:hover{ background:url(i/recoverPwd/close.gif) 0 -16px no-repeat;}
+.d-recoverPwd .dRPs1{padding:0 0 0 110px; margin:10px; background:url(i/recoverPwd/s1.jpg) left top no-repeat; height:105px;}
+.d-recoverPwd .dRPs1 h2{ font-size:14px; margin-bottom:15px;}
+.d-recoverPwd .dRPs1 a{color:#CE935A}
+.d-recoverPwd .dBd{padding:0;}
+.d-recoverPwd .dRPhead{background:#f7f7f7 url(i/recoverPwd/dRPheadBg.png) top repeat-x;padding:5px 10px;color:#333; margin:0 8px; border:1px solid #ddd}
+.d-recoverPwd .dRPbody{padding:5px 10px;height:300px; overflow-x:hidden;overflow-y:auto; margin:0 8px 8px; border:1px solid #ddd; border-top:none;}
+.d-recoverPwd a{color:#58a}
+.d-recoverPwd .dRPhead strong{font-size:14px; display:block; width:100%; height:20px; line-height:20px; margin-bottom:5px; overflow:hidden}
+.d-recoverPwd .crShool-classList th{color:#333; font-weight:bold;}
+.d-recoverPwd .checkUserName{ padding:20px 10px 20px 40px; }
+.d-recoverPwd .checkUserName input.text{ font-size:14px; padding:7px;}
+.dRPS2head{ padding:5px 20px 0;}
+.dRPS2head strong{ font-weight:normal; color:#333; padding:0 10px 0 5px; background:url(i/recoverPwd/arr.gif) right center no-repeat;}
+.dRPS2head b{ font-weight:normal; color:#333; margin:0 5px;}
+
+.recoverStep{ text-align:center; padding:5px;}
+.recoverStep span{ background-image:url(i/recoverPwd/reStep.gif); background-repeat:no-repeat; display:inline-block;*display:inline;*zoom:1;height:29px; line-height:29px;}
+.recoverStep .recoverStepBox span{ background-color:#f4f4f4;color:#999; padding:0 0 0 25px;}
+.recoverStep1{}
+.recoverStep1 .recoverStepBox,.recoverStep2 .recoverStepBox{ background-position:right -87px; padding-right:20px;}
+.recoverStep3 .recoverStepBox{ background-position:right -174px; padding-right:20px;}
+.recoverStep1 .recoverStepBox .part1{ background-color:#DEEEF1; background-position:left 0;color:#83A6AC}
+.recoverStep1 .recoverStepBox .part2{background-position:left -29px; }
+.recoverStep1 .recoverStepBox .part3{background-position:left -58px; }
+.recoverStep2 .recoverStepBox .part1{background-position:left -116px;}
+.recoverStep2 .recoverStepBox .part2{ background-color:#DEEEF1; background-position:left -145px;color:#83A6AC }
+.recoverStep2 .recoverStepBox .part3{background-position:left -29px; }
+.recoverStep3 .recoverStepBox .part1{background-position:left -116px;}
+.recoverStep3 .recoverStepBox .part2{background-position:left -58px; }
+.recoverStep3 .recoverStepBox .part3{background-color:#DEEEF1; background-position:left -145px;color:#83A6AC}
+.dRPS2foot{ padding:5px 10px; text-align:right;}
+.dRPS2foot a{ color:#CE935B;}
+.dRPtip{ text-align:center;color:#f33;}
+.dRPtip a{color:#ce935b;}
+.dRPmail{ text-align:center; font-weight:700; font-size:14px;color:#333; background:#FFFABD; margin:5px 15px; padding:15px 5px; margin-bottom:7px;}
+.dRPerror{ color:#E04F4F; padding:0 10px 10px 40px;}
+
+/* fix */
+.regIndexBox .selector .dropList,.msnInput .selector .dropList,.mailInt,.mailC,.resUser{zoom:1;}
+.regIndexBox .selector .dropList:after,.msnInput .selector .dropList:after,.mailInt:after,.mailC:after,.resUser:after{content:'\0020';display:block;clear:both;height:0;}

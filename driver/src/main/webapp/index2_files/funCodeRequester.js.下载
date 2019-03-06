@@ -1,0 +1,290 @@
+//
+// 手机验证码, 图片验证码刷新工具
+// fun.mobCode()  初始化手机验证码按钮组建
+// fun.imgCode()  初始化图片验证码组件
+//
+
+define(['jquery'], function ($) {
+
+    var _time2Count = 60,
+        _counter = 60,
+        _countID = 0,
+        _button = null,
+        _countDown = function () {
+            if (_counter < 1) {
+                _button.text('获取验证码').removeAttr('disabled');
+            } else {
+                _button.attr('disabled', true);
+                _button.text(_counter + ' 秒后重新获取');
+                _counter--;
+                _countID = setTimeout(_countDown, 1000);
+            }
+        },
+    //
+        _imgcode = false,
+        _imgapi = '',
+        _imgactive = null;
+
+    var changeImg = function () {
+        $(this).prev("span").trigger("click");
+    }
+
+    // Function initial codes goes here
+    return {
+        /**
+         * 手机验证码 v2
+         * Code:
+         *     <input type="text" id="imgcode" name="imgcode" value="" /> <span><img src="api" /></span>
+         * 代码规范: 图片必须是紧接着关连的输入框, img 外的 <span> 标签可选
+         *
+         * @param trigger:jQuery           验证码关联的按钮(组)
+         * @param handle:Function|Object   验证码API 或 配置
+         *
+         *  handle:Object = {
+                 *		api: null,
+                 *		parameter: null, // 调用API接口时的参数. 可以是object或function, 如果是, 可以返回 false 来取消本次获取操作, 并触发 onParameterError 方法
+                 *		onParameterError: null
+                 *	}
+         */
+
+
+        mobCode: function (trigger, handle) {
+            /**
+             *
+             **/
+            var config = {
+                trigger: $(trigger),
+                api: handle,
+                parameter: null,
+                onParameterError: null,
+                onAPISuccess: null,
+                onAPIError: null
+            };
+            if (trigger == 'reset') {
+                clearInterval(_countID);
+                return;
+            }
+
+            if (typeof handle != 'function') {
+                config = $.extend(config, handle);
+            }
+            if (!config.api)
+                alert('funCodeRequest.mobCode  API not defined! ');
+
+            config.trigger.each(function () {
+                _button = $(this);
+                if (_button.data('coderequest') == 1)
+                    return;
+                _button.unbind("click").bind("click", function () {
+                    var bt = $(this);
+                    _button = bt;
+                    if (bt.attr('disabled') == 'disabled')
+                        return;
+
+                    var parameter = null;
+                    if (config.parameter && (typeof config.parameter == 'function')) {
+                        parameter = config.parameter();
+                    } else if (typeof config.parameter == "string") {
+                        parameter = config.parameter;
+                    }
+                    if (parameter === false) {
+                        if (config.onParameterError)
+                            config.onParameterError();
+                        return;
+                    }
+                    bt.attr('disabled', 'disabled').text('短信发送中...');
+                    $('.help-inline', bt.parent()).remove();
+                    config.api(parameter, function (data) {
+                        _counter = _time2Count;
+                        clearInterval(_countID);
+                        _countDown();
+                        var message = data.message;
+                        // 兼容性设置. 客货运企业返回的消息数据在 data.msg 里
+                        if (data.data) {
+                            message = data.data
+                        }
+                        if (data.data && data.data.msg)
+                            message = data.data.msg;
+                        $('<span class="help-inline">' + message + '</span>').insertAfter(bt);
+
+                        if (config.onAPISuccess)
+                            config.onAPISuccess(data);
+                    }, function (edata) {
+                        _countDown();
+                        var message = (edata && edata.code) ? edata.message : '发生系统错误';
+                        //bt.removeAttr('disabled').text('获取验证码');
+                        $('<span class="help-inline  mark" style="color:#b94a48">' + message + '</span>').insertAfter(bt);
+
+                        if (config.onAPIError)
+                            config.onAPIError(edata);
+                    });
+
+                });
+                // set initial mark
+                $(this).data('coderequest', 1);
+            });
+        },
+        /**
+         * 接触trigger的click事件
+         * @param trigger
+         */
+        unbindMobCode: function (trigger) {
+            var config = {trigger: $(trigger)};
+            config.trigger.each(function () {
+                _button = $(this);
+                _button.unbind("click");
+            });
+        },
+        /**
+         * 图片验证码
+         * Code:
+         *     <input type="text" id="imgcode" name="imgcode" value="" /> <span><img src="api" /></span>
+         * 代码规范: 图片必须是紧接着关连的输入框, img 外的 <span> 标签可选
+         *
+         * @param input:jQuery     验证码关连的输入框
+         * @param api:String       验证码图片 URL
+         *
+         *
+         **/
+        imgCode: function (inputs, api) {
+            var _api = api || '/captcha';// default imgcode API url
+            $(inputs).each(function () {
+                // Check initial mark
+                if ($(this).data('coderequest') == 1)
+                    return;
+                var input = $(this),
+                    img = input.parent().children('.valcode');
+                if (img && img.length > 0) {
+                    img.css({
+                        'cursor': 'pointer'
+                    }).click(function () {
+                        $('img', this).attr('src', _api + '?nocache=' + (new Date().getTime()));
+                    });
+                }
+                input.on('focusin', function (event) {
+                    if (_imgactive === this)
+                        return;
+                    _imgactive = this;
+                    // Create code node and initial event
+                    var img = input.parent().children('.valcode');
+                    if (img && img.length > 0) {
+                        // Update image
+                        $('img', img).attr('src', _api + '?nocache=' + (new Date().getTime()));
+                    } else {
+
+                        // Initial code image
+                        var img = $('<span class="valcode" style="cursor:pointer;width:180px"><img title="点击刷新验证码" src="' + _api + '?nocache=' + (new Date().getTime()) + '" />看不清？<a>换一张</a></span>');
+                        img.click(function () {
+                            $('img', this).attr('src', _api + '?nocache=' + (new Date().getTime()));
+                        }).insertAfter(input);
+                    }
+
+                }).data('coderequest', 1);
+            });
+        },
+        /* 图片验证码
+         * Code:
+         *  <ul class="yzm mr10 cb">
+         <li class="mt5 c5">请输入验证码：</li>
+         <li><input type="text" class="cC" id="captcha" style="width:70px;" def="" value=""></li>
+         <li class="valcode" ><img >看不见 刷新</li>
+
+         </ul>
+         *
+         * @param input:jQuery     验证码关连的输入框
+         * @param api:String       验证码图片 URL*/
+        imgode4Ui: function (inputs, api) {
+            var _api = api || '/captcha';// default imgcode API url
+            $(inputs).each(function () {
+                // Check initial mark
+                if ($(this).data('coderequest') == 1)
+                    return;
+                var input = $(this),
+                    img = input.parents("ul").find('.valcode');
+                if (img && img.length > 0) {
+                    img.css({
+                        'cursor': 'pointer'
+                    }).click(function () {
+                        $(this).find("img").attr('src', _api + '?nocache=' + (new Date().getTime()));
+                    });
+                }
+                input.on('focusin', function (event) {
+                    if (_imgactive === this)
+                        return;
+                    _imgactive = this;
+                    // Create code node and initial event
+                    var img = input.parents("ul").find('.valcode');
+                    if (img && img.length > 0) {
+                        // Update image
+                        $(img).find.attr('src', _api + '?nocache=' + (new Date().getTime()));
+                    } else {
+                        var _parent = input.parent();
+                        var li = $("<li class='valcode' style='cursor:pointer;'>");
+                        li.insertAfter(_parent);
+                        // Initial code image
+                        var img = $('<img title="点击刷新验证码" src="' + _api + '?nocache=' + (new Date().getTime()) + '" />');
+                        img.click(function () {
+                            $(this).attr('src', _api + '?nocache=' + (new Date().getTime()));
+                        }).appendTo(li);
+                        var valCodeHelp = $("<li class='c5' style='cursor:pointer;'>");
+                        valCodeHelp.html("看不清？<a>换一张</a>");
+                        valCodeHelp.click(function () {
+                            img.attr('src', _api + '?nocache=' + (new Date().getTime()));
+                        })
+                        valCodeHelp.insertAfter(li);
+                    }
+
+                }).data('coderequest', 1);
+            });
+
+        },
+        imgCodes: function (inputs, api) {
+            var _api = api || '/captcha';// default imgcode API url
+            $(inputs).each(function () {
+                // Check initial mark
+                if ($(this).data('coderequest') == 1)
+                    return;
+                var input = $(this),
+                    img = input.parent().children('.valcode');
+                if (img && img.length > 0) {
+                    img.css({
+                        'cursor': 'pointer'
+                    }).click(function () {
+                        $('img', this).attr('src', _api + '?nocache=' + (new Date().getTime()));
+                    });
+                }
+                input.on('focusin', function (event) {
+                    if (_imgactive === this)
+                        return;
+                    _imgactive = this;
+                    // Create code node and initial event
+                    var img = input.parent().children('.valcode');
+                    if (img && img.length > 0) {
+                        // Update image
+                        $('img', img).attr('src', _api + '?nocache=' + (new Date().getTime()));
+                    } else {
+
+                        // Initial code image
+                        var img = $('<span class="valcode" style="cursor:pointer;width:120px;+width:125px;"><img title="点击刷新验证码" src="' + _api + '?nocache=' + (new Date().getTime()) + '" />' +
+                            '<a class="icon-refresh rcaptcha" title="点击刷新验证码" ></a></span>');
+                        img.click(function () {
+                            $('img', this).attr('src', _api + '?nocache=' + (new Date().getTime()));
+                        }).insertAfter(input);
+                    }
+
+                }).data('coderequest', 1);
+            });
+        },
+        /**
+         *去除读秒
+         * @param {type} bcod
+         * @returns {undefined}
+         */
+        clearCount: function (bcod) {
+            _counter = 0;
+            clearInterval(_countID);
+//		    bcod = $('#btnMCode');
+            bcod.attr('disabled', 'disabled').text('发送手机验证码');
+        }
+    };
+});

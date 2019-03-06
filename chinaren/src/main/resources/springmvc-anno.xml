@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans 
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" 
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd 
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd  
+        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd 
+        http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+	<!-- 手动加载注解的新版本映射器和适配器 -->
+	<!-- <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping"></bean>
+	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter"></bean>
+	 -->
+	 <import resource="classpath:spring-mybatis.xml"/>
+	<!-- <context:component-scan base-package="com.eec"></context:component-scan> -->
+	<!-- 启动注解驱动，自动加载 -->
+	<mvc:annotation-driven></mvc:annotation-driven>
+	<!-- 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/jsp/"></property>
+		<property name="suffix" value=""></property>
+	</bean> -->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="defaultEncoding" value="UTF-8"></property>
+		<property name="maxUploadSize" value="524363000"></property><!-- 限制500M（200M大小209745200） -->
+		<property name="maxInMemorySize" value="40960"></property>
+	</bean>
+	
+	<!-- 配制视图解析器（ViewResolver） -->
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/jsp/"/>
+    	<property name="suffix" value=".jsp"/>	
+	</bean>
+	 <mvc:interceptors>
+        <mvc:interceptor>
+       <!--  拦截页面  --> 
+             <mvc:mapping path="/chinaren/*"/>
+             <mvc:mapping path="/videos/VideoplayPage"/>
+             
+             <mvc:exclude-mapping path="/chinaren.jsp "/>   
+              <mvc:exclude-mapping path="/login.jsp "/>
+               <mvc:exclude-mapping path="/register.jsp"/>
+                <mvc:exclude-mapping path="/videos/CoursewareMarket "/>
+             <mvc:exclude-mapping path="/index.jsp"/><!-- 排除拦截页面  -->
+             <mvc:exclude-mapping path="/login.jsp"/>      
+             <bean id="loginInterceptor" class="cn.atzzy.util.LoginInterceptor"/>
+          </mvc:interceptor>
+     </mvc:interceptors>
+	
+	 
+</beans>

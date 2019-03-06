@@ -1,0 +1,210 @@
+// 网站首页
+define(['jquery', 'js/tpls', 'js/urls', 'js/funQuickSearch', 'lib/jquery.lrinfo'],
+        function ($, tpls, urls, quicksearch) {
+            var _counter = 5,
+                _countID = 0,
+                _button = null,
+                _countID = 0,
+                _countDown = function (btn) {
+                    if (btn) {
+                        _button = btn;
+                    }
+                    if (_counter < 1) {
+                        _button.text('我知道了').removeAttr('disabled');
+                    } else {
+                        _button.text("（" + _counter + '）我知道了');
+                        _counter--;
+                        _countID = setTimeout(_countDown, 1000);
+                    }
+                };
+
+            var showPubInfo = function (u) {
+
+                var showpub = getCookie("122_TAG_SHOWINDEXPUB");
+                if(showpub&&showpub==1){
+                    //do nothing
+                    return;
+                }else{
+                    //clearInterval(_countID);
+                    //$("#forNoticeZone").html(tpls.tempInfo);
+                    //$("#userPbulicity").modal("show");
+                    //setCookie("122_TAG_SHOWINDEXPUB",1,0);
+                    //_countDown($("#publicityIAmKnow"));
+
+                    $.get(u, '', function (data) {
+                        if (data.code == '200') {
+                            clearInterval(_countID);
+                            $("#forNoticeZone").html($.tmpl(tpls.tempInfo, data.data));
+                            $("#userPbulicity").modal("show");
+                            setCookie("122_TAG_SHOWINDEXPUB",1,0);
+                            _countDown($("#publicityIAmKnow"));
+
+                        }
+                    });
+                }
+                /**
+                $.get(u, '', function (data) {
+                    if (data.code == '200') {
+                        clearInterval(_countID);
+                        $("#forNoticeZone").html($.tmpl(tpls.tempInfo, data.data));
+                        $("#userPbulicity").modal("show");
+                        _countDown($("#publicityIAmKnow"));
+
+                    }
+                });*/
+            };
+                //load adv pic
+                var loadImg = function (listArray, fn) {
+                    var loaded = 0, qty = listArray.length;
+                    $(listArray).each(function (index, data) {
+                        var img = new Image();
+                        img.onload = function () {
+                            ++loaded;
+                            if (loaded == qty && fn) {
+                                fn.apply($(document));
+                            }
+                        };
+                        img.src = data;
+                    });
+                };
+                //取得cookie
+                var getCookie = function (name) {
+                        var nameEQ = name + "=";
+                        var ca = document.cookie.split(';');    //把cookie分割成组
+                        for (var i = 0; i < ca.length; i++) {
+                                var c = ca[i];                      //取得字符串
+                                while (c.charAt(0) == ' ') {          //判断一下字符串有没有前导空格
+                                        c = c.substring(1, c.length);      //有的话，从第二位开始取
+                                }
+                                if (c.indexOf(nameEQ) == 0) {       //如果含有我们要的name
+                                        return unescape(c.substring(nameEQ.length, c.length));    //解码并截取我们要值
+                                }
+                        }
+                        return false;
+                };
+
+                //清除cookie
+                var clearCookie = function (name) {
+                        setCookie(name, "", -1);
+                };
+
+                //设置cookie
+                var setCookie = function (name, value, seconds) {
+                        seconds = seconds || 0;   //seconds有值就直接赋值，没有为0，这个根php不一样。
+                        var expires = "";
+                        if (seconds != 0) {      //设置cookie生存时间
+                                var date = new Date();
+                                date.setTime(date.getTime() + (seconds * 1000));
+                                expires = "; expires=" + date.toGMTString();
+                        }
+                        document.cookie = name + "=" + escape(value) + expires + "; path=/";   //转码并赋值
+                };
+                var remoteUrl = function (u) {
+
+                        if (u.indexOf("?") > 0) {
+                                u += '&t=' + Math.random(1000);
+                        } else {
+                                u += '?t=' + Math.random(1000);
+                        }
+                        $.get(u, '', function (data) {
+                                if (data.code == '200') {
+                                    var opts = data.data;
+                                        var len = opts.length;
+                                        for (var i = 0; i < len; i++) {
+                                                var link = data.data[i].originUrl;
+                                                var pic = data.data[i].pic;
+                                                var layout = data.data[i].layout;
+                                                var xsms = data.data[i].xsms;
+                                                if (link.indexOf("?") > 0) {
+                                                        link += '&t=' + Math.random(1000);
+                                                } else {
+                                                        if (link != null && link != "") {
+                                                                link += '?t=' + Math.random(1000);
+                                                        }
+                                                }
+                                                if (pic.indexOf("?") > 0) {
+                                                        pic += '&t=' + Math.random(1000);
+                                                } else {
+                                                        pic += '?t=' + Math.random(1000);
+                                                }
+
+                                            if (layout != "center") {
+                                                        $("#" + layout).higo_plugins_ad({
+                                                                src: pic,
+                                                                closeSrc: "/static/img/close.gif",
+                                                                href: link,
+                                                                autoHide: false,
+                                                                hideSecond: 5,
+                                                                top: 120,
+                                                                layout: layout,
+                                                                width: 94,
+                                                                height: 306,
+                                                                opacity: 0.8,
+                                                                z: 3
+                                                        });
+                                                } else {
+                                                        loadImg([pic], function () {
+                                                            $(".focusBanner").html("<a href='"+link+"'><img src='" + pic + "'></a>");
+                                                            $(".focusBanner").slideDown(2000);
+                                                            setTimeout(function () {
+                                                                $(".focusBanner").slideUp(2000)
+                                                            }, xsms * 1000);//xsms是seconds，*1000是ms。
+                                                        });
+
+                                                        // alert(getCookie('contentId'));
+//                                                        if (getCookie('contentId') != data.data[i].contentid) {
+//                                                                clearCookie("contentId");
+//                                                                setCookie("contentId", data.data[i].contentid, 3600 * 24 * 10); //设置cookie的值，生存时间10天
+//                                                                // alert(getCookie('contentId')); //取得cookie的值，显示tank
+
+                                                        //by quanxw
+                                                        /* $("#" + layout).higo_plugins_ad({
+                                                                        src: pic,
+                                                                        closeSrc: "/static/img/close.gif",
+                                                                        href: link,
+                                                                        autoHide: true,
+                                                                        hideSecond: xsms,
+                                                                        top: 110,
+                                                                        layout: layout,
+                                                                        width: 1000,
+                                                                        height: 1000,
+                                                                        opacity: 0.8,
+                                                                        left: 120
+                                                        });*/
+                                             //   }
+
+                                                }
+
+                                        }
+                                }
+
+
+                        });
+                }
+                return {
+                        render: function (userinfo) {
+                                showPubInfo("m/showSystipsInfo/0");
+                                $("#remoteModal").on("hidden", function () {
+                                        $(this).removeData("modal");
+                                });
+                                remoteUrl("m/showIndexInfo");
+                                quicksearch.render(userinfo);
+
+                                $('#myCarousel').carousel({
+                                        interval: 2000
+                                });
+                                $('#myCarousel').find(".carousel-indicators").find("li").each(
+                                    function(i,item){
+                                        $(item).hover(function(){
+                                            $('#myCarousel').carousel(i);
+                                        });
+                                    }
+                                );
+
+
+//            tj.tj("index");
+                        }
+                };
+
+        });
+

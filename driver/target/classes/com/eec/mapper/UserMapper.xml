@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.eec.mapper.UserMapper">
+	
+	<select id="getDriverById"  parameterType="java.lang.Integer" resultType="driver">
+	select * from driver where id=#{id}
+	</select>
+	<select id="getDriverByIdCard"  parameterType="java.lang.String" resultType="driver">
+	select * from driver where idCard=#{idCard}
+	</select>
+	
+	<insert id="insertDriver" parameterType="driver">
+	  insert into driver(name,idCard,phone,pwd) values(#{name},#{idCard},#{phone},#{pwd})
+	</insert>
+	
+	<select id="getAllInfo" resultType="info" >
+		select * from info order by id desc
+	</select>
+	<delete id="deleteDriverByIdCard" parameterType="java.lang.String">
+		delete from info where idCard=#{idCard}
+	</delete>
+	<insert id="insertInfo" parameterType="info">
+	  insert into info(idCard,subject,name,date,time) values(#{idCard},#{subject},#{name},#{date},#{time})
+	</insert>
+	
+	
+	
+	
+	<update id="updateDriver" parameterType="driver">
+	update driver set phone = #{phone},pwd = #{pwd} where id=#{id}
+	</update>
+	
+	<delete id="deleteDriver" parameterType="java.lang.Integer">
+		delete from driver where id=#{id}
+	</delete>
+	<select id="getInfoByIdCard" resultType="info" parameterType="java.lang.String">
+		select * from driver where idCard =#{idCard}
+	</select>
+	<select id="getInfoByIdCard2" resultType="info" parameterType="java.lang.String">
+		select * from info where idCard =#{idCard}
+	</select>
+	
+	
+	
+	<select id="getAllDriver" resultType="driver" >
+		select * from driver
+	</select>
+	
+	
+</mapper>

@@ -1,0 +1,207 @@
+//
+// Bootstrap 分页代码生成器
+//
+
+define(['js/tpls', 'js/urls'], function(tpls, urls) {
+        var __id = 0,
+                optDefaults = {
+                        divid: 'mypagination' + (++__id), // 指定ID
+                        total: 0,
+                        size: 6, // 显示几个 链接
+                        active: 1, // 当前页，页码从 1 开始
+                        records: 0, //中记录数
+                        insertAfter: false, // 确定组建是添加在指定组建后面还是追加在组建结尾. 默认为追加模式
+                        //
+                        mode: 'full',
+                        // 标记哪些按钮需要显示
+                        linkFirst: '',
+                        linkLast: '',
+                        linkPrev: '#',
+                        linkNext: '#',
+                        linkPage: '#', // 标记是否需要显示每一页的按钮
+
+                        textFirst: '首页',
+                        textLast: '末页',
+                        textPrev: '上一页',
+                        textNext: '下一页',
+                        keepFirst: true,
+                        keepLast: true,
+                        keepPrev: true,
+                        keepNext: true,
+                        link: '#page{id}', // 链接模板
+                        alwaysShow: false, // 当分页数为1的时候不显示控件
+                        callback: null, // function ( pagenum, pagebar ){...}
+                        //
+                        __root: null // 
+                },
+        defs = {
+                'basic': {
+                        linkFirst: '',
+                        linkLast: '',
+                        linkPrev: '#',
+                        linkNext: '#',
+                        linkPage: '#'
+                },
+                'full': {
+                        linkFirst: '#',
+                        linkLast: '#',
+                        linkPrev: '#',
+                        linkNext: '#',
+                        linkPage: '#'
+                },
+                'tiny': {
+                        linkFirst: '',
+                        linkLast: '',
+                        linkPrev: '#',
+                        linkNext: '#',
+                        linkPage: ''
+                }
+        },
+        pagRender = {
+                // return jQuery object
+                /****
+                 *
+                 * @param * option:Object          Required
+                 * @param   container:jQuery       Default is null
+                 *
+                 ******/
+                generate: function(option, container) {
+                        var opts = $.extend({}, optDefaults, option);
+                        // Set active page
+                        opts.active = (opts.active < 1 ? 1 : (opts.active > opts.total ? opts.total : opts.active));
+                        if (opts.mode != 'basic' && defs[opts.mode])
+                                opts = $.extend(opts, defs[opts.mode]);
+                        else
+                                opts.mode = 'basic';
+
+                        if (typeof container == 'string')
+                                container = $(container);
+
+                        if (!opts.alwaysShow && opts.total <= 1)
+                                return null;
+
+                        var links = $.extend({
+                                prev: 0,
+                                next: 0,
+                                first: 0,
+                                last: 0,
+                                linkFirst: '',
+                                linkLast: '',
+                                linkPrev: '',
+                                linkNext: '',
+                                mode: opts.mode,
+                                textFirst: opts.textFirst,
+                                textLast: opts.textLast,
+                                textPrev: opts.textPrev,
+                                textNext: opts.textNext,
+                                active: opts.active,
+                                total: opts.total,
+                                records: opts.records,
+                                pages: [],
+                                divid: opts.divid
+                        }, defs[opts.mode]),
+                                pageStart = pageEnd = 1;
+
+                        if (opts.total < opts.size) {
+                                pageStart = 1;
+                                pageEnd = opts.total;
+                        } else {
+                                pageStart = opts.active - Math.floor(opts.size / 2);
+                                pageStart = pageStart < 1 ? 1 : pageStart;
+                                if (pageStart + opts.size > opts.total) {
+                                        pageStart = opts.total - opts.size + 1;
+                                        pageStart = pageStart < 1 ? 1 : pageStart;
+                                        pageEnd = opts.total;
+                                } else {
+                                        pageEnd = pageStart + opts.size - 1;
+                                }
+                        }
+
+                        // set links
+                        if (opts.active > 1) {
+                                if (opts.linkFirst && opts.linkFirst.length > 0) {
+                                        links.first = 1;
+                                        links.linkFirst = opts.linkFirst.split('{id}').join(1);
+                                }
+                                if (opts.linkPrev && opts.linkPrev.length > 0) {
+                                        links.prev = opts.active - 1;
+                                        links.linkPrev = opts.linkPrev.split('{id}').join(links.prev);
+                                }
+                        } else {
+                                if (opts.keepFirst && opts.linkFirst.length > 0) {
+                                        links.first = 0;
+                                        links.linkFirst = '#';
+                                }
+                                if (opts.keepPrev && opts.linkPrev.length > 0) {
+                                        links.prev = 0;
+                                        links.linkPrev = '#';
+                                }
+                        }
+
+                        if (opts.linkPage == '#') {
+                                for (var i = pageStart; i <= pageEnd; i++) {
+                                        links.pages.push({
+                                                no: i,
+                                                link: opts.link.split('{id}').join(i)
+                                        });
+                                }
+                        }
+
+                        if (opts.active < opts.total) {
+                                if (opts.linkNext && opts.linkNext.length > 0) {
+                                        links.next = opts.active + 1;
+                                        links.linkNext = opts.linkNext.split('{id}').join(links.next);
+                                }
+                                if (opts.linkLast && opts.linkLast.length > 0) {
+                                        links.last = opts.total;
+                                        links.linkLast = opts.linkLast.split('{id}').join(opts.total);
+                                }
+                        } else {
+                                if (opts.keepNext && opts.linkNext.length > 0) {
+                                        links.next = 0;
+                                        links.linkNext = '#';
+                                }
+                                if (opts.keepLast && opts.linkLast.length > 0) {
+                                        links.last = 0;
+                                        links.linkLast = '#';
+                                }
+                        }
+
+                        // link create end 
+
+                        var pagination = $.tmpl(tpls.pagePagination, links);
+                        $('a', pagination).click(function() {
+                                var th = $(this);
+                                if (th.parent().hasClass('active') || th.parent().hasClass('disabled'))
+                                        return false;
+
+                                opts.active = parseInt(th.data('page'));
+                                opts.__root = pagination;
+                                // 刷新导航
+                                pagRender.generate(opts, container);
+                                // 回调
+                                if (opts.callback) {
+                                        return !!opts.callback(parseInt(th.data('page')), pagination);
+                                } else {
+                                        return false;
+                                }
+                        });
+
+                        //
+                        if (container && container.length > 0) {
+                                if (opts.__root !== null) {
+                                        opts.__root.replaceAll(pagination);
+                                } else {
+                                        if (opts.insertAfter)
+                                                pagination.insertAfter(container);
+                                        else
+                                                container.append(pagination);
+                                }
+
+                        }
+                        return pagination;
+                }
+        };
+
+        return pagRender;
+});

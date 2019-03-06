@@ -1,0 +1,14 @@
+spring:
+  profiles: linux
+test:
+  user:
+    name: linux
+    
+---
+spring:
+  profiles: windows
+test:
+  user:
+    name: windows
+  
+  

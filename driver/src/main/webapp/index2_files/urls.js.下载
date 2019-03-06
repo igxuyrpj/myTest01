@@ -1,0 +1,468 @@
+define({
+    "scriptBase": '', // Script file base url. Configuration in base.js automatic
+    //
+    "loginDomain": "https://www.122.gov.cn",
+    "apibase": "",
+    "logout": "/logout",
+    "login": "/user/m/login",
+    // 用户基本信息
+    "userinfo": "/user/m/index", // 用户登录信息
+    "userOperateLog": "/user/m/userlog/list", // 操作日志
+    "userOperateAddress": "/user/m/useraddress/list", // 用户地址
+    "userOperateAllAddress": "/user/m/useraddress/alllist", // 用户全部地址
+    "queryNotifyBus": "/m/notify/query", //查询业务告知
+    "deleteuseraddress": "/user/m/useraddress/deladdress",//删除用户寄件地址
+    "saveuseraddress": "/user/m/useraddress/saveaddress",//保存用户寄件地址
+    "msaveuseraddress": "/user/m/useraddress/msaveaddress",//手机保存用户寄件地址
+    "defaultuseraddress": "/user/m/useraddress/defaultaddress",//设置用户默认寄件地址
+    "currentProvice": "/user/m/useraddress/getcurrprovice",// 获取当前寄件地址的省份信息
+    "currentCity": "/user/m/useraddress/getcurrcity",// 获取当前寄件地址的市、区信息
+    "subCity": "/user/m/useraddress/subcity",// 获取当前寄件地址的市、区信息
+    "postPrice": "/user/m/useraddress/getprice",// 获取邮政资费信息
+    "postArea": "/user/m/useraddress/getarea",// 获取邮政类型信息
+    "postGbf": "/user/m/useraddress/getGbf",// 获取工本费
+    "postNewGbf": "/user/m/useraddress/getNewGbf",// 获取工本费--新增
+    "userChangePassSuccess": "/m/tips?m=1", // 密码操作成功页面
+    "userSelfDeleteSuccess": "/m/tips?m=3", // 感谢使用
+    "userSelfPauseSuccess": "/m/tips?m=7", // 暂停账户成功
+    "userbindVehSccess": "/m/tips?m=8", // 绑定机动车成功
+    "userbindDrvSccess": "/m/tips?m=9", // 绑定驾驶证成功
+    "switcharea": "/m/index/switch",
+    "quicklinks": "/m/syspara/basicinfo", // 获取首页  个性化功能、相关链接、联系方式信息
+    "userProcess": "/user/m/process/getProcessList",
+    "processDetail": "/user/m/process/getProcess",
+    "getProcessTraces": "/user/m/process/getProcessTraces",//获取快递跟踪
+    "preaPrint": "/user/m/process/preaprint",
+    "yqPrint": "/user/m/process/yqprint",
+    // 修改密码
+    "modifypasswd": "/user/m/userinfo/update/passwd",
+    //删除自己
+    "userSelfDel": "/user/m/userinfo/deleteself",
+    //暂停账户
+    "userSelfPause": "/user/m/userinfo/pauseself",
+    //找回密码
+    "findpassQueryUser": "/user/m/user/queryuser", //根据用户名及姓名获取用户信息
+    "findpassGetCode": "/user/m/user/getfindpasscode", //获取手机验证码
+    "findpassCheckCode": "/user/m/user/checkfindpasscode", //验证校验码
+    "findpassSave": "/user/m/user/findpasssave", //保存密码
+
+    //启用账号
+    "findEnableUser": "/user/m/user/queryDisableUser",//查询被禁用账号
+    "enableUser": "/user/m/user/enableUser",//启用账号
+    "syncVehContact":"/user/m/userinfo/syncVehContact",//同步机动车联系方式
+    "syncDrvContact":"/user/m/userinfo/syncDrvContact",//同步驾驶证联系方式
+
+    // 用户注册
+    "registerCheckID": "/user/m/user/checksfzmhm", // 检测身份证明号码的唯一性以及数据的合法性
+    "registerCheckVehicle": "/user/m/user/checkuserveh", // 选择了绑定机动车时检测
+    "registerCheckLicense": "/user/m/user/checkuserdrv", // 选择了绑定驾驶证时检测
+    "registerCheckVehLic": "/user/m/user/checkuservehdrv", // 选择了绑定机动车、驾驶证时检测，单击下一步时触发
+    "registerCheckStudent": "/user/m/user/checkuserxy",//选择了我是学员时触发
+    "registerCheckXh": "/user/m/user/checkuserxh",//选择了我要选号时触发
+    "registerSkipCheck": "/user/m/user/checkuserunbind", // 跳过绑定
+    "registerMobileCode": "/user/m/user/getIdentifyingcode", // 手机验证码
+    "registerVerfiyCode": "/user/m/user/checkcodesave", // 检测验证码并保存
+    "smsnotice": "/user/m/user/smsnotice", // 短信提示
+    "userIdentityUrl": "/user/m/user/getUserIdentityUrl", //获取实名认证url
+    "modifyDrvVehSjhm": "/user/m/user/modifyDrvVehSjhm", //验证验证码,修改联系方式,保存用户信息。
+
+    //用户信息申诉
+    "checkcomplainuserinfo": "/user/m/user/checkcomplainuserinfo", // 检测用户提出的申诉是否合法，合法进入下一步
+    "submitcomplainuserinfo": "/user/m/user/submitcomplainuserinfo", // 检测用户提出的申诉是否合法，合法进入下一步
+    "initcomplaintelephone": "/user/m/user/initcomplaintelephone", // 初始化用户手机号码申报的流程第一步 进入下一步
+    "generatesmscodeforcomplain": "/user/m/user/generateSMSCode",  // 生成验证码
+    "checksmscodeforcomplain": "/user/m/user/checkSMSCode", // 检测用户提出的申诉是否合法，合法进入下一步
+    "savecomplainphoto" : "/user/m/user/savessphoto", //将附件进行保存
+    "deletecomplainphoto" : "/user/m/user/deletessphoto", //将附件进行删除
+    "updateissueusertelephone" : "/user/m/user/updateissueusertelephone", //更新问题用户的手机号
+    "generateSMSForModifiedUserInfos" : "/user/m/user/generateSMSForModifyUserInfo", //生成验证码给用户更新
+    "precheckModifiedUserInfos" : "/user/m/user/precheckModifiedUserInfos", //生成验证码给用户更新
+
+    "checkcaptcha": "/m/publicquery/checkCaptcha",//检查验证码服务
+    //用户登录
+    "checkKey": "/user/m/login/checkkey", //验证数字证书ID
+
+    //验证码
+    "smscodeOnBindVeh": "/user/m/smscode/bindveh", //绑定机动车时发送验证码的服务
+    "smscodeOnBindDrv": "/user/m/smscode/binddrv", //绑定驾驶证时发送验证码的服务
+    "smscodeOnValidateUser": "/user/m/smscode/validateuser", //验证用户时发送验证码的服务
+    "smscodeOnSjhm": "/user/m/smscode/sjhm",//给指定手机号码发送验证码
+
+    // <!--
+    // 	private Integer scores = 0;// 积分值
+    // 	private Integer surveils = 0;// 违法数量
+    // 	private Integer apprizes = 0;// 告知
+    // 	private Integer notices = 0;// 抄告
+    // 	private Integer bulletins = 0;// 通报
+    // -->
+
+    // 告知与提醒
+    "apprize": "/user/m/apprize/index", // 所有提醒，按时间排序
+    "apprizeVehicle": "/user/m/apprize/veh", // 机动车提醒
+    "apprizeLicense": "/user/m/apprize/drv", // 驾驶人(驾驶证)提醒
+    "apprizeMakrAsRead": "/user/m/apprize/read", // 标记为已读  /user/m/userapprize/read/{xh}
+
+
+    // 通报
+    "bulletins": "/user/m/noticeinfo/all", // 所有通报
+    "bulletinsLast": "/user/m/noticeinfo/new", // 教育部门-最新通报
+    "bulletinsQuery": "/user/m/noticeinfo/fwdm", // 通报查询
+    "bulletinsQueryAdv": "/user/m/noticeinfo/noticebycert", // 通报精确查询
+    "bulletinsStatistic": "/user/m/noticeinfo/edutrffsum", // 通报统计数据
+    "bulletinsMarkAsRead": "/user/m/noticeinfo/ckbj", // 标记为已读， : user/m/noticeinfo/ckbj/{xh}
+
+    // 抄告
+    "noticeLast": "/user/m/noticeinfo/new", // 最新抄告
+    "noticeDetail": "/user/m/noticeinfo/dcwf", // 抄告详情
+    "noticeReports": "/user/m/noticeinfo/safetysum", // 抄告统计
+    "noticeMarkAsRead": "/user/m/noticeinfo/ckbj", // 标记为已读
+
+    //信息查询
+    "companyGetType2": "/user/m/noticeinfo/companyfwlx", //获取信息类别的下拉信息
+    "companyInfoSearch": "/user/m/noticeinfo/getcompanyinfo", //包含精确查询
+
+    //违法查询
+    "companyVioquerySearch": "/user/m/uservio/vioquery",
+    "companySuriquerySearch": "/user/m/uservio/suriquery",
+    "companySuriPhotoSearch": "/user/m/uservio/suriphotoquery",//查询违法记录照片
+    "userVehViolations": "/user/m/uservio/vehsvios", //用户机动车违法信息
+    "userVehSurveils": "/user/m/uservio/vehssuris", //用户机动车非现场违法
+    "userVehForces": "/user/m/uservio/vehsforces", //用户机动车强制措施违法
+    "userDrvViolations": "/user/m/uservio/drvsvios", //用户绑定驾驶证违法记录
+    "userDrvForces": "/user/m/uservio/drvsforces", //用户绑定驾驶证强制措施记录
+    "checkSurveilVeh": "/vio/surveil/checkSurveilVeh",//校验可以处理违法的车辆
+    "processSurveil": "/vio/surveil/main",//进入违法
+    "viewVioPhoto": "/vio/surveil/view/photo",//违法图片查看
+    "queyMyscore": "/vio/query/score",//我的驾驶证积分查询
+    "checkSurveil": "/vio/surveil/check/surveil",//校验选择的电子监控
+    "userdrvendorse": "/user/m/userinfo/drvendorse",//用户绑定驾驶证扣分违法记录
+    "uservehundosurveil": "/user/m/userinfo/vehundosurveils",//用户绑定机动车非现场未处理违法
+
+    //信息统计
+
+    //"companySafetysumSearch":"/user/m/noticeinfo/safetysum",
+
+    // 全局列表数据接口
+    "syscodeServiceType": "/m/syscode/yylx", // 营运类型/车辆类型选择（下拉框）
+    "syscodePlateType": "/m/syscode/vehtype", // 号牌种类选择（下拉框）
+    "syscodeFZJG": "/m/syscode/gxfzjg", // 管辖发证机关（下拉框）
+    "syscodeFZJGKT": "/m/syscode/gxfzjgkt", // 管辖发证机关(已开通的)（下拉框）
+    "syscodeServiceCode": "/user/m/noticeinfo/fwmc", // 服务类型代码（下拉框）
+    "getfzjg": "/m/syscode/getfzjg", // 根据名称获取发证机关
+    "gethpt": "/m/syscode/gethpt", // 获取号牌头
+    "getFeedBackConfig": "/m/syscode/getFeedBackConfig", // 获取号牌头
+
+
+    //
+    "queryViolation": "/m/publicquery/vio", // 公共查询—违法查询
+    "queryScores": '/m/publicquery/scores', // 公共查询—积分查询
+    "queryDiscard": "/m/publicquery/discard", // 公共查询—报废车查询
+    "queryPlate": "/m/publicquery/plate", // 公共查询—报废车查询
+    "queryVehicleNotice": "/m/publicquery/publicity", // 公共查询—机动车公告查询
+
+    // 公告查询
+    "queryVechile": "/m/pubquery/veh", //  公告查询—机动车查询
+    "queryDriver": "/m/pubquery/drv", //  公告查询—驾驶证查询
+    "querySchool": "/m/pubquery/school", // 公告查询—驾校查询
+    "queryExaminer": "/m/pubquery/examiner", // 公告查询—考试员查询
+    "queryPubNotice": "/m/pubindex/list",
+    // 业务进展
+    "business": "/api/not/defined", // 业务进展列表，按时间排序
+
+
+    // 我的机动车
+    "vehicle": "/user/m/userinfo/vehs", // 机动车列表
+    "allVehicle": "/user/m/userinfo/allvehs", // 所有绑定的机动车列表
+    "vehicleAndVio": "/user/m/userinfo/vehvio", //机动车和机动车违法信息，用于用户首页
+    "vehicleSurveils": "/user/m/userinfo/vehsurveils", //绑定机动车的所有本地非现场违法
+    "allVehicleSurveils": "/user/m/userinfo/allvehsurveils", //绑定机动车的所有本地非现场违法
+    "vehicleDetail": "/user/m/userinfo/vehdetail", //机动车详细信息
+    "vehicleOptions": "/user/m/userinfo/vehoptions", //机动车基本信息，填充用户下拉菜单
+    "allVehicleOptions": "/user/m/userinfo/allvehoptions", //机动车基本信息，填充用户下拉菜单
+
+
+    //修改机动车驾驶证联系方式
+    "modifyvehOptions": "/user/m/vehdrvmodify/vehoptions",//获取可以修改的机动车联系方式的下拉列表
+    "glxzqhOptions": "/user/m/vehdrvmodify/glxzqhlist",//获取管辖行政区划的下拉列表
+    "modifyvehinfo": "/veh/modify/update/veh",//修改机动车联系方式
+    "modifydrvinfo": "/drv/modify/update/drv",//修改驾驶证联系方式
+    "checkVeh": "/veh/modify/check/veh",//校验机动车是否可以修改
+
+
+    // 我的驾驶证
+    "license": "/user/m/userinfo/drvs", // 驾驶证列表
+    "licenseDetail": "/user/m/userinfo/drvdetail", //机动车详细信息
+    "licenseAndVio": "/user/m/userinfo/drvvio", // 驾驶证（驾驶人）和驾驶人违法记录，用于用户首页
+
+    "infoStatistics": "/user/m/noticeinfo/transsum", //信息统计
+
+    // 学员用户信息
+    "getStudentInfo": "/user/m/studentinfo/studetail",
+    "checkStu": "/user/m/studentinfo/checkstu",
+
+    // 客货运相关API
+    'transpcorpGetInfo': '/user/m/transpcorp/getTranspcorp',
+    'transpcorpSaveInfo': '/user/m/transpcorp/saveTranspcorp',
+    "transpcorpGetVehList": "/user/m/transpcorp/queryTranspcorpVehList",
+    "transpcorpGetVehDetail": "/user/m/transpcorp/getTranspcorpVeh",
+//       "transpcorpGetHpt": "/user/m/transpcorp/loadHpt",
+    "deleteTranspcorpVeh": "/user/m/transpcorp/deleteTranspcorpVeh",
+    "sendUserPhoneVeh": "/user/m/transpcorp/sendUserPhoneVeh",
+    "checkTranspcorpVeh": "/user/m/transpcorp/checkTranspcorpVeh",
+    "saveTranspcorpVeh": "/user/m/transpcorp/saveTranspcorpVeh",
+    "transpcorpGetDrvList": "/user/m/transpcorp/queryTranspcorpDrvList",
+    "transpcorpGetDrvDetail": "/user/m/transpcorp/getTranspcorpDrv",
+    "deleteTranspcorpDrv": "/user/m/transpcorp/deleteTranspcorpDrv",
+//       "transpcorpLoadSfzmmcList": "/m/syscode/idcardtype",
+    "checkTranspcorpDrv": "/user/m/transpcorp/checkTranspcorpDrv", //新增驾驶人
+    "sendUserPhoneDrv": "/user/m/transpcorp/sendUserPhoneDrv",
+    "saveTranspcorpDrv": "/user/m/transpcorp/saveTranspcorpDrv",
+    // 用户信息
+    "userDetail": "/user/m/userinfo/basic", // 用户基本信息
+    "userUpdate": "/user/m/userinfo/update/user", // 更新用户信息
+    "userPhoneUpdate": "/user/m/userinfo/update/userphone", // 更新用户手机信息
+    "userYzm": "/user/m/smscode/send", // 发送手机验证码给user绑定的手机（非驾驶证和机动车的手机）
+    "usercheckcode": "/user/m/userinfo/check/smscode", // 检查验证码
+    "userBindDrv": "/user/m/userinfo/bind/drv", //绑定驾驶证
+    "userBindVeh": "/user/m/userinfo/bind/veh", //绑定机动车
+    "userBindDrvYzm": "/user/m/smscode/senddrv/",
+    "userUnbindDrv": "/user/m/userinfo/unbind/drv", //取消绑定驾驶证
+    "userUnbindVeh": "/user/m/userinfo/unbind/veh", //取消绑定机动车
+    "userUnlinkVeh": "/user/m/userinfo/unlink/veh",//取消机动车挂靠
+    "userlinkVeh": "/user/m/userinfo/link/veh",//机动车挂靠
+    "userUnlinkDrv": "/user/m/userinfo/unlink/drv",//取消驾驶证挂靠
+    "userlinkDrv": "/user/m/userinfo/link/drv",//驾驶证挂靠
+    "userOtherBindVeh": "/user/m/userinfo/bind/otherveh", //绑定他人机动车
+    "usercheckVehicle": "/user/m/userinfo/link/check",//检验机动车使用性质和车辆用途
+
+    //审核挂靠申请
+    "checkPassVeh": "/user/m/transpcorp/checkpassveh",//机动车挂靠审核
+    "checkPassDrv": "/user/m/transpcorp/checkpassdrv",//驾驶证挂靠审核
+    "insureUnLinkInfo": "/user/m/transpcorp/insureunlinkinfo",//确认已解除挂靠信息
+
+    // 地图API
+    "mapCateByDriver": "/m/placesitectrl/loadBusincessTypeHtml?ywlx=02", // 驾驶人业务列表
+    "mapCateByViolation": "/m/placesitectrl/loadBusincessTypeHtml?ywlx=04", // 违法业务列表
+    "mapCateByVehicle": "/m/placesitectrl/loadBusincessTypeHtml?ywlx=01", // 机动车业务类型列表
+    "mapCateByOther": "/m/placesitectrl/loadBusincessTypeHtml?ywlx=09", // 其他业务类型列表
+    "mapCateByBusiness": "/m/placesitectrl/loadPlacesiteTypeHtml", // 网点类型列表
+    "mapNetwork": "/m/placesitectrl/loadBusincessList", // 查询网点
+    "mapCateByNet": "/m/placesitectrl/loadBusincessTypeHtmlNew?xtlb=20", // 互联网网点
+    "mapCateByGaw": "/m/placesitectrl/loadBusincessTypeHtmlNew?xtlb=00", // 公安网窗口网点
+    "mapCateByOthers": "/m/placesitectrl/loadBusincessTypeHtmlNew?xtlb=99", // 其他网点
+    "getCategoryBySpecial": "/m/placesitectrl/loadBusincessTypeHtmlNew?xtlb=10", // 其他网点
+    "getCategoryByGawVeh": "/m/placesitectrl/loadBusincessTypeHtmlNew?xtlb=01", // 其他网点
+    "getCategoryByGawDrv": "/m/placesitectrl/loadBusincessTypeHtmlNew?xtlb=02", // 其他网点
+
+    //帮助信息api
+    "helpBusinesstype": "/m/guidectrl/loadBusincessType", //获取帮助信息的业务类型
+    "helpBusiness": "/m/guidectrl/loadBusincess", //获取业务类型帮助信息
+    "helpRoot": "/m/guidectrl/", //获取业务类型帮助信息
+    "userFeedBack": "/m/userFeedBack", //获取反馈列表
+    "feedbackdetail": "/m/feedbackdetail", //获取反馈详情
+
+
+    // 网站链接定义
+    "siteurl": "", // 网站地址
+    "loginurl": "/m/login",
+    "logouturl": "/logout",
+    "noticeurl": "/static/notice",
+    "areajumpurl": "/m/index/jump/", // http://.../{area_code}
+
+    // 用户首页链接
+    "userhomeurl": function (yhlx, dwsx) {
+        if (yhlx == "1") {
+            return "/views/member";
+        } else {
+            //单位属性
+            dwsx = dwsx + '';
+            switch (dwsx) {
+                case '3': // 3、教育部门
+                case '8': // 8、学校
+                    return "/views/member01";
+                case '7': // 7、安监部门
+                    return "/views/member02";
+                case '2': // 2、客货运企业
+                    return "/views/member03";
+                case '1': // 1、普通单位
+                    return "/views/member04";
+                case '4': // 4、交通部门
+                    return '/views/member05';
+                // 以下这俩货一期不做
+                // 5、驾校
+                // 6、4S店
+            }
+        }
+        return '/user/type/not/defined/?';
+    },
+    /**
+     * 用户菜单栏选中
+     */
+    userSideBar: function (menuId) {
+        //菜单id的前缀定死
+        $("li#sidebar_menu_" + menuId).addClass("active");
+    },
+    // 网站相关链接 - END
+
+
+    // === 旧的API定义
+
+    "motoinfo": "/user/m/userinfo/vehvio",
+    // 各种提醒API
+    "lastApprize": "/user/m/apprize/index", // 所有提醒
+    "vehicelApprize": "/user/m/apprize/veh", // 提示告知信息--机动车提醒
+    "licenseApprize": "/user/m/apprize/drv", // 提示告知信息--驾驶证提醒
+    "markApprizeAsRead": "/user/m/userapprize/read", // 提示告知信息—置为已读 /user/m/userapprize/read/{xh}
+
+    "myVechicles": "/user/m/userinfo/vehs",
+    // 我的驾驶证 相关API
+    "myLicenseAndIllegal": "/user/m/userinfo/drvvio", // 获取驾驶证和违法信息
+    "myLicense": "/user/m/userinfo/drvs",
+    "myIllegal": "/user/m/uservio/drvsvios",
+    "monitoring": "/user/m/uservio/vehssuris", // 机动车违法—电子监控记录
+    "driverAlert": "/user/m/apprize/drv", // 驾驶证 - 驾驶人提醒
+
+    "businessProgress": "/api/not/defined",
+    "tj": "/m/tj/invite", //统计服务接口，调用一次，记录一次pv和uv
+
+    //暂住证API
+    "trpCheckUser": "/user/m/usertrp/checkUser",
+    "trpFzjg": "/user/m/usertrp/getFzjg",
+    "trpSave": "/user/m/usertrp/save",
+    "trpZp": "/user/m/usertrp/getUserTrpZp",
+    "trpList": "/user/m/usertrp/getUserTrpList",
+    //挂靠相关
+    "myLinkVechicles": "/user/m/userinfo/linkvehs",//获取机动车信息
+    "myLinkLicenses": "/user/m/userinfo/linkdrvs",//获取驾驶证信息
+    "myLinkTranspcorp": "/user/m/userinfo/linktranspcorps",//获取挂靠企业信息
+    "myCheckVehicles": "/user/m/transpcorp/getcheckvihicles",//审核挂靠车辆信息获取
+    "myChecklicenses": "/user/m/transpcorp/getchecklicenses",//审核挂靠驾驶证信息获取
+
+    //占道施工相关
+    "userOccupy": "/m/occupyctrl/getOccupyList",//查询占道施工申请
+    "userSaveOccupy": "/m/occupyctrl/saveOccupy",//保存占道施工申请
+    "userDeletePhoto": "/m/occupyctrl/deletePhoto",//删除图片
+    "userDeleteOccupy": "/m/occupyctrl/deleteOccupy",//删除施工申请
+    "userOccupyDetail": "/m/occupyctrl/getOccupyDetail",//查询一条占道施工申请的详细信息
+    "userGetSPBMbyFZJG": "/m/occupyctrl/getSPBMbyFZJG",//根据发证机关获取对应的审批部门
+    "userPhotoOccupy": "/m/occupyctrl/scanImageList",//获取图片序号
+
+    //事故快处进度查询
+    "userAcdprocess":"/m/acdprocessctrl/getacdprocesslist",//事故快处进度查询
+
+    //绑定其他人的机动车
+    "otherVechicles": "/user/m/userinfo/othervehs",//获取其他机动车信息
+    // ===================================
+    // Default ajax data format
+    ajaxData: function (param, onSuccess, onError) {
+        var data = $.extend({
+            method: 'POST',
+            dataType: 'JSON',
+            cache: false,
+            success: function (data) {
+                if (data.code == 200 || data.code == "200") {
+                    if (onSuccess) {
+                        onSuccess(data);
+                    }
+                } else {
+                    if (data.code === 401) {
+                        alert(data.message);
+                        location.href = "/user/m/login";
+                        return;
+                    }
+                    if (onError) {
+                        onError(data);
+                    }
+                }
+            },
+            error: function (e) {
+                // TODO:: 全局错误处理
+                if (onError) {
+                    if (e.responseJSON) {
+                        onError(e.responseJSON);
+                    }
+                    else {
+                        var code = e.status;
+                        var msg = e.statusText;
+
+                        if (code == 0 || code == "0") {
+                            msg = "系统繁忙";
+                        }
+
+                        if (code == 503 || code == "503") {
+                            msg = "服务不可用";
+                        }
+                        onError({
+                            code: code,
+                            message: msg,
+                            originalData: e
+                        });
+
+                    }
+                }
+            }
+        }, param);
+        return data;
+    },
+    getPageinfo: function (records) {
+        if (records > 0) {
+            return "<div class=\"mem-block data-nums\"><p>共 <span>" + records + "</span> 条数据</p></div>";
+        }
+    },
+    getMsg: function (data) {
+        if (data && data.message) {
+            return data.message;
+        }
+        return null;
+    },
+    loadCSS: function (css, type) {
+        if (typeof css == 'string') {
+            css = [css];
+        }
+        for (var i = 0; i < css.length; i++) {
+            var url = css[i];
+            // TODO:: user dynamic css path
+            if (!(/^http:\/\//i).test(url)) {
+                url = '/static/css/' + url.replace(/\/\//g, '/');
+            }
+            $('<link href="' + url + '" rel="stylesheet" type="text/css" media="' + (type == 'print' ? 'print' : 'screen') + '" />').appendTo($('head'));
+        }
+    },
+    /**
+     * @module urlParser
+     *
+     * @name 获取当前url,将参数串转化成JSON类型
+     * @version 2013-2-27
+     */
+    getParameter: function (url) {
+        //q=j，这个参数是history加的，ie需要人为区分
+        if (window.location.hash && window.location.hash.indexOf("q=j") > 0)
+            return null;
+        var urlStr = url || window.location.search,
+            param = {};
+        if (urlStr) {
+            var urlArr = urlStr.split("?")[1].split("&");
+            for (var i = urlArr.length - 1; i >= 0; i--) {
+                var tempArr = urlArr[i].split("=");
+                if (tempArr[0] == 'q' && tempArr[1] == 'j') {
+                    return null;
+                }
+                param[tempArr[0]] = decodeURIComponent(tempArr[1]);
+            }
+            return param;
+        }
+        return null;
+    },
+    /**
+     * 返回当前运行环境的域名，带protocol
+     */
+    getHost: function () {
+        if (!window.location.origin) {
+            window.location.origin = window.location.protocol + "//"
+                + window.location.hostname
+                + (window.location.port ? ':' + window.location.port : '');
+        }
+        return window.location.origin;
+    },
+    "fake_bottom": "" //免得每次加逗号
+});

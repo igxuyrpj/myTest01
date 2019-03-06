@@ -1,0 +1,27 @@
+// 注册页面
+define(['jquery', 'js/urls'], function ($, urls) {
+        var dp = {
+                // 比对数字证书正确性
+                checkKeyHttps: function (param, success, error) {
+                        //https只能jsonp
+                        $.getJSON(urls.loginDomain + urls.checkKey + "?jsoncallback=?", param, function (data) {
+                                if (data.code == 200)
+                                        success(data);
+                                else
+                                        error(data);
+                        });
+
+                },
+                checkKey:function ( param, success, error ){
+                        var ajaxData = urls.ajaxData({
+                                url: urls.loginDomain + urls.checkKey,
+                                data: param
+                        }, success, error);
+                        $.ajax(ajaxData);
+                },
+                //
+                _fakeItem: 0
+        };
+
+        return dp;
+});

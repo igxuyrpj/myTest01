@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.eec.mapper.UserMapper">
+	
+		<select id="getStudent"  parameterType="java.lang.String" resultType="student">
+	select * from student where num=#{num}
+	</select>
+	<select id="getStudentName"  parameterType="java.lang.String" resultType="student">
+	select name from student where num=#{num}
+	</select>
+	<select id="getStudentById"  parameterType="java.lang.Integer" resultType="student">
+	select * from student where id=#{id}
+	</select>
+	
+	<insert id="insertStudent" parameterType="student">
+	  insert into student(school,num,name,class1,college,phone,sex,age,major,date) values(#{school},#{num},#{name},#{class1},#{college},#{phone},#{sex},#{age},#{major},#{date})
+	</insert>
+	<insert id="insertMsg" parameterType="msg">
+	  insert into msg(textMsg,name,num) values(#{textMsg},#{name},#{num})
+	</insert>
+	<select id="getAllMsg" resultType="msg" >
+		select * from msg order by id desc
+	</select>
+	<update id="updatePassword" parameterType="student">
+	update student set school = #{school} where id=#{id}
+	</update>
+	
+	<update id="updateStudent" parameterType="student">
+	update student set school = #{school},num = #{num},name = #{name},class1 = #{class1},college = #{college},phone = #{phone},sex = #{sex},age = #{age},major = #{major},date = #{date} where id=#{id}
+	</update>
+	<delete id="deleteStudent" parameterType="java.lang.Integer">
+		delete from student where id=#{id}
+	</delete>
+	
+	<select id="getAllStuByWords" resultType="student" parameterType="java.lang.String">
+		select * from student where college like '%${value}%'
+	</select>
+	
+	<select id="getAllStuByCollege" resultType="student" parameterType="java.lang.String">
+		select * from student where college like '%${value}%'
+	</select>
+	<select id="getAllStu" resultType="student" >
+		select * from student where num  not like 'admin' 
+	</select>
+	<select id="getAllStuByClass1" resultType="student" parameterType="java.lang.String">
+		select * from student where class1 like '%${value}%'
+	</select>
+	<select id="getAllStuByName" resultType="student" parameterType="java.lang.String">
+		select * from student where name like '%${value}%'
+	</select>
+	
+	<select id="ChooseConditions" parameterType="student" resultType="java.util.Map">  
+    select * from student  
+    <trim prefix="where" prefixOverrides="and |or">    
+       
+     <if test="school!=null and school!=''">  
+                and school = #{school}  
+     </if>  
+    <if test="college!=null and college!=''">  
+                and college = #{college}  
+     </if>  
+     <if test="major!=null and major!=''">  
+                and major = #{major}  
+     </if> 
+     <if test="class1!=null and class1!=''">  
+                and class1 like '%${class1}' 
+     </if>  
+     <!-- <if test="class1!=null and class1!=''">  
+                and class1 = #{class1}  
+     </if>  --> 
+        
+    </trim>    
+</select>    
+	
+</mapper>

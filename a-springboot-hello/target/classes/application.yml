@@ -1,0 +1,12 @@
+person:
+  name: 张三1
+  age: 23
+  sex: 男1
+spring:
+  mvc:
+    view:
+      prefix: /WEB-INF/views/
+      suffix: .jsp
+      
+      
+      

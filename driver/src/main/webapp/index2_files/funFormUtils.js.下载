@@ -1,0 +1,153 @@
+//
+// 表单助手
+//
+
+define(['jquery'], function($) {
+
+	var util = {
+		/**
+		 * 生成select选项列表
+		 *
+		 * @param opts:Array         [ {text:''}, {text:'', value:''}, {label:'option group', options:[]} ]
+		 * @param selected:Number|String
+		 *
+		 **/
+		options: function(opts, selected, idxfix) {
+			var len = opts.length,
+				opt,
+				ary = [],
+				isnum = (typeof selected == 'number'),
+				sel = '',
+				val1, val2;
+
+			if (isnum) {
+				idxfix = idxfix == undefined ? 0 : idxfix;
+				selected = selected + idxfix;
+			} else {
+				idxfix = 0;
+			}
+
+			// TODO:: 当使用选项组后，如何设置选中项。
+			// TODO:: 如何设置多选
+			for (var i = 0; i < len; i++) {
+				opt = opts[i];
+
+				if (typeof opt == 'object') {
+					if (opt.label) {
+						ary.push('<optgroup label="' + opt.label + '">' + util.options(opt.options, selected, i) + '</optgroup>');
+						continue;
+					} else {
+						val1 = (opt.value == undefined || opt.value == null) ? opt.text : opt.value;
+						val2 = opt.text;
+					}
+				} else {
+					val1 = val2 = String(opt);
+				}
+
+				if (isnum) {
+					sel = selected == i ? ' selected="selected"' : '';
+				} else {
+					sel = (selected == val1 || selected == val2) ? ' selected="selected"' : '';
+				}
+
+				ary.push('<option value="' + val1.split('"').join('&quot;') + '"' + sel + '>' + val2 + "</option>");
+			}
+
+			return ary.join('');
+		},
+		select_: function(id, opts, selected, clazz) {
+			var opts = util.options(opts, selected);
+			return '<selected id="' + id + '" name="' + id + '" class="' + clazz + '">' + opts + '</selected>';
+		},
+		// 设置选项
+		selectOption: function(select, val) {
+			select = $(select.get(0));
+			$('option', select).each(function(idx) {
+				var opt = $(this);
+				if (opt.text() == val || opt.attr('value') == val) {
+					select.get(0).selectedIndex = idx;
+					return false;
+				}
+			});
+		},
+		selectedText: function(select) {
+			var idx = select.get(0).selectedIndex;
+			return $('option', select).eq(idx).text();
+		},
+		
+		/**
+		 * 关联字段生成器
+		 * 将多个字段拼接起来
+		 *
+		 * @param output:Object<Input>   输出字段, 一般为隐藏的input
+		 * @param fields:jQuery          必须是jQuery对象或选择器
+		 * @param format:String          拼接格式, 变量 %s
+		 *
+		 **/
+		relationFields: function(output, fields, format) {
+			if (!format) {
+				var len = fields.length;
+				format = '';
+				while (--len > -1) {
+					format += '%s';
+				}
+			}
+
+			var concatval = function() {
+				var cval = '';
+				fields.each(function(idx) {
+					var v = $.trim($(this).val());
+					if (v && v.length > 0) {
+						cval += v;
+					} else {
+						cval = '';
+						output.val(cval);
+						return false;
+					}
+					if (idx == (fields.length - 1)) {
+						output.val(cval);
+					}
+				});
+			};
+			concatval();
+			fields.change(concatval);
+		},
+		/**
+		 * 输入大写
+		 * @param {type} zone
+		 * @param {type} input
+		 * @returns {undefined}
+		 */
+		upperCase: function(zone, input)
+		{
+			if (zone)
+			{
+				zone.on("change", "input[type=text]", function() {
+					$(this).val($(this).val().toUpperCase());
+				});
+				zone.on("change", "textarea", function() {
+					$(this).val($(this).val().toUpperCase());
+				});
+			}
+			if (input)
+			{
+				input.change(function() {
+					$(this).val($(this).val().toUpperCase());
+				});
+			}
+		},
+		// 将form转换为object对象用于提交
+		serializeObject:function (form){
+			var result={};
+			$('input[name], select[name], textarea[name]').each(function (){
+				var t=$(this);
+				result[t.attr('name')] = t.val();
+			});
+			return result;
+		},
+		//
+		__fakeItem: ''
+	};
+	// Function initial codes goes here
+	return util;
+});

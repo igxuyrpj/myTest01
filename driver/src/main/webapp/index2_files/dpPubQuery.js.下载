@@ -1,0 +1,83 @@
+define(['jquery', 'js/urls'], function($, urls) {
+        var dp = {
+                // 公共查询—违法查询
+                queryViolation: function(param, success, error) {
+                        var ajaxData = urls.ajaxData({
+                                method: 'POST',
+                                url: urls.apibase + urls.queryViolation,
+                                data: param
+                        }, success, error);
+                        $.ajax(ajaxData);
+                },
+                // 公共查询—报废车查询
+                queryDiscard: function(param, success, error) {
+                        var ajaxData = urls.ajaxData({
+                                method: 'POST',
+                                url: urls.apibase + urls.queryDiscard,
+                                data: param
+                        },
+                        function(data) {
+                                var content = data.data;
+                                data.data = {};
+                                data.data.content = [content];
+                                success(data);
+                        }, error);
+
+                        $.ajax(ajaxData);
+                },
+                // 公共查询—号牌寄递运单查询
+                queryPlate: function(param, success, error) {
+                        var ajaxData = urls.ajaxData({
+                                    method: 'POST',
+                                    url: urls.apibase + urls.queryPlate,
+                                    data: param
+                            },
+                            function(data) {
+                                    var content = data.data;
+                                    data.data = {};
+                                    data.data.content = [content];
+                                    success(data);
+                            }, error);
+
+                        $.ajax(ajaxData);
+                },
+                // 公共查询—积分查询
+                queryScores: function(param, success, error) {
+                        var ajaxData = urls.ajaxData({
+                                method: 'POST',
+                                url: urls.apibase + urls.queryScores,
+                                data: param
+                        },
+                        function(data) {
+                                var content = data.data;
+                                data.data = {};
+                                data.data.content = [content];
+                                success(data);
+                        }, error);
+
+                        $.ajax(ajaxData);
+                },
+                // 公共查询—机动车公告查询
+                queryVehicleNotice: function(param, success, error) {
+                        var ajaxData = urls.ajaxData({
+                                method: 'POST',
+                                url: urls.apibase + urls.queryVehicleNotice,
+                                data: param
+                        },
+                        success, error);
+                        $.ajax(ajaxData);
+                },
+                checkCaptcha: function(param, onSuccess, onError) {
+                        $.ajax(urls.ajaxData({url: urls.apibase + urls.checkcaptcha, data: param},
+                            function(data) {
+                                    if (onSuccess) {
+                                            onSuccess(data);
+                                    }
+                            }, onError));
+                },
+                //
+                __fakeItem: ''
+        };
+
+        return dp;
+});

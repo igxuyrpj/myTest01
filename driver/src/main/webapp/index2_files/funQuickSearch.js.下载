@@ -1,0 +1,91 @@
+// 功能模块。页面右侧搜索栏
+define(['jquery', 'js/urls', 'js/dpSyscode','js/dpPubQuery', 'js/funFormUtils', 'js/funCodeRequester', 'js/funValidateMethods', 'js/funPlaceholder'
+                //
+                , 'btval'
+],
+        function($,urls, syscode,pubquery, futils, codereq, validrules, placeholder) {
+                var FUN = {
+                        initP:function(){
+                            $("#WFhpzl").change(function(){
+                                var hpzl=$("#WFhpzl").val();
+                                $('#hphm1-a').empty();
+                                if(hpzl=='03'||hpzl=='09'){
+                                    $('#hphm1-a').append("<option value='使'>使</option>");
+                                }else{
+                                    $('#hphm1-a').append("<option value='"+$("#hpt").val()+"'>"+$("#hpt").val()+"</option>");
+                                }
+                            });
+                            $("#BFhpzl").change(function(){
+                                var hpzl=$("#BFhpzl").val();
+                                $('#hphm2-a').empty();
+                                if(hpzl=='03'||hpzl=='09'){
+                                    $('#hphm2-a').append("<option value='使'>使</option>");
+                                }else{
+                                    $('#hphm2-a').append("<option value='"+$("#hpt").val()+"'>"+$("#hpt").val()+"</option>");
+                                }
+                            });
+                        },
+                        render: function(userinfo) {
+                                this.initP();
+                                var info = $('#info-search');
+
+//                                syscode.getOptionsForPlateType(null, function(data) {
+//                                        $('#searchtab1 select[name="hpzl"]').html(futils.options(data.data, '02'));
+//                                        $('#searchtab3 select[name="hpzl"]').html(futils.options(data.data, '01'));
+//                                });
+//                                syscode.getProvinceList(null, function(data) {
+//                                        $('#searchtab1 #hphm1-a, #searchtab3 #hphm2-a').html(futils.options(data.data, userinfo.hpt));
+//                                });
+
+//                                futils.selectOption($('#searchtab1 select[name="hpzl"]'),"02");
+//                                futils.selectOption($('#searchtab3 select[name="hpzl"]'),"01");
+//                                futils.selectOption($('#searchtab1 #hphm1-a'),userinfo.hpt);
+//                                futils.selectOption($('#searchtab3 #hphm2-a'),userinfo.hpt);
+
+
+
+
+                                futils.relationFields($('#searchtab1 #hphm1'), $('#searchtab1 #hphm1-a, #searchtab1 #hphm1-b'));
+                                futils.relationFields($('#searchtab3 #hphm2'), $('#searchtab3 #hphm2-a, #searchtab3 #hphm2-b'));
+                                codereq.imgCodes('#info-search input[name="captcha"]');
+
+                                $('.einfo', info).css({
+                                        'position': 'absolute',
+                                        'background-color': '0xFFF',
+                                        'opacity': 0
+                                });
+
+                                $("input.yzminput").on("focusout",function(){
+                                       var yzm =  $(this).val();
+                                        var _this= $(this);
+                                        if(yzm!=null&&yzm.length==4){
+                                                pubquery.checkCaptcha({"captcha": yzm}, function (data) {
+                                                        _this.parent().removeClass("error");
+                                                }, function (data) {
+                                                        _this.parent().addClass("error");
+                                                        _this.val("");
+                                                });
+                                        }
+                                });
+
+                                $('form', info).validation({
+                                        rules: validrules,
+                                        breakOnError: false,
+                                        onSuccess: function() {
+                                                return true;
+                                        },
+                                        onFaile: function() {
+                                        }
+                                });
+                                $('.nav-tabs>li>a', info).mousedown(function() {
+                                        var th = $(this);
+                                        th.tab('show');
+                                        $('input, textarea', $(th.attr('href'))).placeholder();
+                                });
+                                placeholder.render();
+
+                        }
+                };
+
+                return FUN;
+        });

@@ -1,0 +1,161 @@
+@charset "utf-8";
+/* Sohu Bai Style Sheet
+ * App: chinaren
+ * Author: Qian Cheng (ariose@live.com)
+ * Copyright: Sohu.com Inc.
+ */
+
+body.theme-cr_0001	{background:#b5cfe6 url(i/bg.jpg) 0 0 no-repeat;}
+.appBody{padding:5px;}
+.pageLay-hasAppbar #appbar{width:135px;}
+.pageLay-hasAppbar #canvas{width:815px;}
+
+/* navbar */
+#navbar{height:44px;width:950px;}
+#navbar .navbarMaskIframe{height:43px;}
+#navbarMid{height:43px;background:url(i/navbar.png) no-repeat;_background-image:url(i/navbar.gif);}
+#navbarMid>#navbarInt{background:#FF8800 url(i/navbar.png) no-repeat -10px 0;_background-image:url(i/navbar.gif);}
+#navbarInt{height:42px;}
+#navbarLogo{height:37px;margin-top:2px; background:url(i/head-cr.gif) 15px center no-repeat;}
+#navbarLogo h1 a{height:37px;}
+#navbarLogo h1 img{display:none;margin:0 auto;}
+#navbarMain .navTitle{height:25px;line-height:25px;padding:0 10px;}
+#navbarMain .navTitle span.navTitleInt{}
+#navbarMain .navTitle:hover{background-color:#ffc22e;background:url(i/navbar.png) -10px -150px no-repeat;_background:url(i/navbar.gif) -10px -150px no-repeat;}
+#navbarMain .navItem-on .navTitle,#navbarMain .navItem-drop .navTitle{background-color:#ffb82f!important;background:url(i/navbar.png) -10px -150px no-repeat;_background:url(i/navbar.gif) -10px -150px no-repeat;height:25px;}
+#navbarMain .navTitle:hover span.navTitleInt{}
+#navbarMain .navItem-hasContent .navTitleInt  { background-position:100% -66px;}
+#navbarExtra{margin:11px 5px 0;}
+#navbarExtra li{background:url(i/navbar.png) -906px -283px no-repeat;background:url(i/navbar.gif) -906px -283px no-repeat;}
+#navbarExtra a{color:#FFEBD6;zoom:1;}
+#navbarExtra a span{zoom:1;}
+#navbarSearch{margin-top:7px;width:235px; text-align:right}
+#navbarSearch input{border-color:#E9A033; background:#fff;}
+#navbarSearch button{background:url(i/navbar.png) 0 -50px no-repeat; border:none 0;}
+#navbarSearch button:hover{background-position:-50px -50px;}
+#navbarMain .navContent,#navbarMain .navContent:default{top:26px!important;}
+#navbarMain .navContent{ background:#FFB82F;top:43px;}
+#navbarMain .navContentFt a{color:#fff;}
+
+#navbarLogo{width:120px;}
+#navSohu{ float:right;width:73px;line-height:23px; background:url(i/navbar.png) 0 -50px no-repeat;text-indent:7px;position:relative; margin-top:10px; cursor:pointer;}
+#navSohu span{color:#FEF0E1;}
+#navSohuInt{ display:none}
+.navSohuOn #navSohuInt{ display:block;width:71px;background:#FFFBE8; border:1px solid #FFD89E; clear:both; position:absolute; top:23px; left:0;}
+#navSohu a{ display:block;padding:0px 5px;color:#E85F09;}
+#navSohu a:hover{ background:#FFD89E; text-decoration:none;}
+#navbarMain{ clear:right; margin-top:9px;}
+#navbarMain .navItem{ margin-right:3px;}
+#navbarMain .navTitle{}
+#navbarSearch select.select{border-color:#E99030;}
+#navbarSearch input{width:100px;border-color:#E99030}
+#navbarSearch button{width:44px;height:24px; border:1px solid #E99030;border-left:none 0;background:url(i/navbar.png) 0 -200px repeat-x;color:#fff;text-indent:inherit;*text-indent:0;overflow:hidden;*border:none;*height:22px;}
+#navbarSearch button:hover{ background:url(i/navbar.png) 0 -240px repeat-x;}
+#navbarDrop .popLayer .content{border:1px solid #ccc;}
+#navbarDrop ul.dropList li.on{ background-color:#FFD133;}
+
+/*** page ***/
+#page{padding-top:44px;width:950px;}
+
+/* pageLay */
+.pageLay-hasAppbar #pageBd{background:url(i/pageBd-hasAppbar.gif) 0 0 no-repeat;margin-top:12px; position:relative}
+	.pageLay-hasAppbar #pageBdMid{background:url(i/pageBd-hasAppbar.gif) -1990px 100% no-repeat;}
+		.pageLay-hasAppbar #pageBdInt{background:url(i/pageBd-hasAppbar.gif) -990px 0 repeat-y; position:relative;}
+			.pageLay-hasAppbar #appbar{background:url(i/pageBd-hasAppbar.gif) -3150px 100% no-repeat;width:135px; overflow:inherit;*overflow:visible}
+			.pageLay-hasAppbar #appbarInt{background:url(i/pageBd-hasAppbar.gif) -3000px 0 repeat-y; padding-right:10px;}
+
+.pageLay-fullWidth #pageBd{background:url(i/pageBd-fullWidth.gif) -1000px 100% no-repeat;}
+	.pageLay-fullWidth #pageBdInt{background:#FFF7E7 url(i/pageBd-fullWidth.gif) 0 -30px no-repeat;}
+
+/* appbar */
+#appUserInfo{padding:76px 0 0; text-align:center;}
+#appUserAvatar{width:87px;height:105px; background:url(i/avatarBg.gif) no-repeat; position:absolute; top:-25px;left:20px;zoom:1;}
+#appUserAvatar img{width:75px;height:91px; margin:6px;}
+#appUserName{font:400 14px/24px 'Microsoft YaHei','»ªÎÄÏ¸ºÚ','ËÎÌå',sans-serif;color:#333; margin-left:-10px;}
+#appUserName a.i-edit-userInfo{ background:url(i/crHomeIcon.gif) 0 0 no-repeat;}
+#appUserName a.i-edit-userInfo:hover{ background:url(i/crHomeIcon.gif) 0 -16px no-repeat;}
+#appUserInfoEdit{ margin-left:-10px;color:#E8D6C5;}
+#appUserInfoEdit a{color:#CD915C}
+#appbarApps a.appName{background:url(i/appbar-item.gif) 0 -999px no-repeat;}
+#appbarApps a.appName span.appName{background:url(i/appbar-item.gif) 0 -999px no-repeat;_padding:7px 4px 1px 0; position:relative;}
+#appbarApps a.appName span.appName em{ position:absolute; display:block; width:4px;height:7px; overflow:hidden;right:7px; top:12px; background:url(i/arr.gif) no-repeat;}
+
+#appbarApps li.on{background:url(i/appbar-item.gif) 100% 0 no-repeat;}
+#appbarApps a.appName,#appbarApps li.add a.appName, #appbarApps li.add a.appName span.appName{color:#c1571e;}
+#appbarActions .a-manage{color:#c1571e}
+#appbarActions  { border-top:1px dotted #D7CEBD; margin-right:10px;padding:5px 5px 5px 0;}
+#appbarActions a{color:#c30}
+.crSearch{ width:312px;height:30px;padding:5px 0 0 5px;background:url(i/appHead-cr-search.gif) no-repeat; float:right}
+.crSearch select.select{width:60px;border-color:#EDE1BF}
+.crSearch input.text{width:175px;border-color:#EDE1BF}
+#appbarApps .appList{ padding-right:10px;}
+#appbarApps li{margin:0 0 1px;}
+#appbarApps{ padding:10px 0 0;}
+#appbarApps img, #appbarApps .icon{width:16px;height:16px; margin:0 8px 0 3px;}
+#appbarApps .appName{ font-size:14px;color:#994022;}
+#appbarApps .line-solid{ margin:1px 0 1px 10px;border-bottom:1px solid #EFE0C2; overflow:hidden;_width:95px;_height:1px;}
+.appMore{width:92px;height:15px; margin:5px 0 0 13px;}
+.appMore a{ display:block; width:100%; height:100%; background:url(i/crAppMore.gif) 0 0 no-repeat;}
+.appMore a:hover{background:url(i/crAppMore.gif) 0 -15px no-repeat;}
+.appMoreUp a{background:url(i/crAppMore.gif) 0 -30px no-repeat;}
+.appMoreUp a:hover{background:url(i/crAppMore.gif) 0 -45px no-repeat;}
+#appbarActions a.a-add-crApp{background:url(i/crHomeIcon.gif) 0 -32px no-repeat; margin-right:1em;}
+#appbarActions a.a-set-crApp{background:url(i/crHomeIcon.gif) 0 -64px no-repeat;}
+
+/* imbar */
+#imTinybarToggle,.im-short #imTinybarToggle{ background-image:url(i/im-tall.gif);}
+#imbarInt{background:url(i/im-tall.gif) no-repeat scroll -50px 50% transparent;}
+.im-short #imbarInt{background-image:url(i/im-tall.gif);}
+
+/*** page-home ***/
+#pageHdThemeSwitch{ display:none}
+
+#pageHd{ background:none!important;height:10px!important;padding:0!important;}
+#pageHd *{ display:none!important;}
+
+.page-home #homeLay .colSub{color:#666;}
+	.page-home #homeLay .colSub a{color:#c5743e;}
+	.page-home #homeLay .colSub .meta{color:#999;}
+	.page-home #homeLay .colSub .mod{border-color:#ecdcbb;}
+	.page-home #homeLay .colSub .mHd h3{color:#666;}
+
+.page-home #homeTask .taskBox,
+.page-home #homeTask .taskInt,
+.page-home #homeRequests,
+.page-home #homeBirthday,
+.page-home #homeVisiters,
+.page-home #fhMyFriends,
+.page-home #homeFriendReco,
+.page-home #homeFriendReco .friendItem,
+.page-home #homeInvite,
+.page-home #homeAvatarsShow,
+.page-home .hong,
+.page-home .homeMobile{border-color:#ecdcbb;}
+
+.page-home .homeGift {background:url(i/page-home/homeGift.png) no-repeat;}
+
+.page-home #homeCareer .money,
+.page-home #homeCareer .rankId,
+.page-home #homeCareer .punch .button,
+.page-home #homeInvite li,
+.page-home .i-refreshAd,
+.page-home .i-closeAd,
+.page-home .i-voteAd,
+.page-home .starUserIcon a,
+.page-home .homeMobileBox,
+.page-home .homeMobile p{background-image:url(i/page-home/side.png);}
+
+#pageFt,#pageFt a{color:#fff;}
+
+.whiteBoxBd{ padding:1px 5px;}
+#homeTask .taskList li { border:none!important;}
+#homeTask .taskList li.newTask a span.leftTit{color:#C5743E;}
+.homeFeedFilter{ top:0!important;}
+#homeBirthday{}
+#homeBirthday li .title a{ float:left}
+#appbar{z-index:2!important;}
+#canvas{ position:relative; z-index:1!important;}
+
+/* Ò³Âë */
+.pager strong{color:#6899b9}
+.pager input.text-s{width:25px;padding:1px 2px; margin:0 3px;}

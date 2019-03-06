@@ -1,0 +1,74 @@
+/**
+ * 消息处理
+ * @param {type} $
+ * @returns {_L4.FUN}
+ */
+define(['jquery', 'js/urls'], function($, urls) {
+//        var modalId = "pageUniqueModal";
+//        var tmpl = "<div id='" + modalId + "' class='modal hide fade' tabindex='-1' role='dialog' aria-labelledby='tipTitle' aria-hidden='true'><div class='modal-header'><h3 id='tipTitle'>系统提示</h3></div><div class='modal-body'><p>${msg}</p></div><div class='modal-footer'><button class='btn btn-primary' data-dismiss='modal' aria-hidden='true'>关闭</button></div></div>";
+        var FUN = {
+                render: function() {
+//                        $("<div id=" + modalId + "></div>").appendTo($("body"));
+                },
+                showSuccessMsg: function(data, msg) {
+                        if (msg && msg.length > 0)
+                        {
+                                FUN.showMsg(msg);
+                                return;
+                        }
+                        msg = "操作成功";
+                        if (data && data.message)
+                                msg = data.message;
+                        FUN.showMsg(msg);
+                }
+                ,
+                showErrorMsg: function(data, msg)
+                {
+                        if (msg && msg.length > 0)
+                        {
+                                FUN.showMsg(msg);
+                                return;
+                        }
+                        msg = FUN.defaultMsg();
+                        if (data && data.message)
+                                msg = data.message;
+                        FUN.showMsg(msg);
+                },
+                showRefreshMsg: function()
+                {
+                        FUN.showMsg(FUN.refreshMsg());
+                },
+                showMsg: function(msg)
+                {
+//                        var m = $("#" + modalId);
+//                        if (m.length === 0)
+//                        {
+//                                $.tmpl(tmpl, {msg: msg}).appendTo($("body"));
+//                                m = $("#" + modalId);
+//                        } else
+//                                $.tmpl(tmpl, {msg: msg}).replaceAll(m);
+//                        m.modal("show");
+                        alert(msg);
+                },
+                getMsg: function(data, defaultMsg)
+                {
+                        var msg = urls.getMsg(data);
+                        if (msg)
+                                return msg;
+                        if (defaultMsg)
+                                return defaultMsg;
+                        return null;
+                },
+                defaultMsg: function()
+                {
+                        return "网络异常，请稍候重试";
+                },
+                refreshMsg: function()
+                {
+                        return "网络异常，请刷新页面";
+                }
+        };
+
+        return FUN;
+});
+

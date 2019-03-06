@@ -1,0 +1,8 @@
+define(['jquery', 'js/urls' ], function($, urls) {
+	return {
+		tj: function(id) {
+			var url = (urls.siteurl + urls.tj) + '?id=' + id + '&t=' + (new Date().getTime());
+                        $.get(url);
+		}
+	}
+});

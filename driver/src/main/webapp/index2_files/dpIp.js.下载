@@ -1,0 +1,46 @@
+define(['jquery', 'js/urls'], function ($, urls) {
+//        var sina_api = "http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=js&ip=";
+                var sina_api = "http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=js";
+                var dp = {
+                        //调用新浪api，获取ip地址信息
+                        getIpInfo: function (ip, success) {
+                                $.getScript(sina_api + "&ip=" + ip, function (data) {
+                                        try {
+                                                if (remote_ip_info && remote_ip_info !== undefined && remote_ip_info.ret !== -1) {
+                                                        success(remote_ip_info);
+                                                }
+                                        } catch (e) {
+                                        }
+                                });
+                        },
+                        // 根据ip 获取发证机关
+                        getFzjg: function (param, success, error) {
+                                //从客户端获取ip信息，然后再调用服务端获取发证机关信息。
+                                $.getScript(sina_api, function (data) {
+                                        try {
+                                                if (remote_ip_info && remote_ip_info !== undefined && remote_ip_info.ret !== -1) {
+                                                        var ajaxData = urls.ajaxData({
+                                                                url: urls.getfzjg,
+                                                                data: {cityName: remote_ip_info.city}
+                                                        }, success, error);
+
+                                                        $.ajax(ajaxData);
+
+                                                }
+                                        } catch (e) {
+                                                var ajaxData = urls.ajaxData({
+                                                        url: urls.getfzjg,
+                                                        data: {cityName: ''}
+                                                }, success, error);
+
+                                                $.ajax(ajaxData);
+                                        }
+                                });
+                                // 模拟数据
+
+                        }
+                };
+
+                return dp;
+        }
+);

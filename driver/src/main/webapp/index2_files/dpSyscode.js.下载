@@ -1,0 +1,243 @@
+//
+// 全局静态数据接口
+//   下拉列表数据等
+//
+
+define(['jquery', 'js/urls'], function($, urls) {
+        var _optionAll = [{
+                        text: '所有',
+                        value: ''
+                }];
+    	var data1=[{"text":"大型汽车","value":"01"},
+    	          {"text":"小型汽车","value":"02"},
+    	          {"text":"使馆汽车","value":"03"},
+    	          {"text":"领馆汽车","value":"04"},
+    	          {"text":"境外汽车","value":"05"},
+    	          {"text":"外籍汽车","value":"06"},
+    	          {"text":"普通摩托车","value":"07"},
+    	          {"text":"轻便摩托车","value":"08"},
+    	          {"text":"使馆摩托车","value":"09"},
+    	          {"text":"领馆摩托车","value":"10"},
+    	          {"text":"境外摩托车","value":"11"},
+    	          {"text":"外籍摩托车","value":"12"},
+    	          {"text":"低速车","value":"13"},
+    	          {"text":"拖拉机","value":"14"},
+    	          {"text":"挂车","value":"15"},
+    	          {"text":"教练汽车","value":"16"},
+    	          {"text":"教练摩托车","value":"17"},
+    	          {"text":"试验汽车","value":"18"},
+    	          {"text":"试验摩托车","value":"19"},
+    	          {"text":"临时入境汽车","value":"20"},
+    	          {"text":"临时入境摩托车","value":"21"},
+    	          {"text":"临时行驶车","value":"22"},
+    	          {"text":"警用汽车","value":"23"},
+    	          {"text":"警用摩托","value":"24"},
+    	          {"text":"原农机号牌","value":"25"},
+    	          {"text":"香港入出境车","value":"26"},
+    	          {"text":"澳门入出境车","value":"27"},
+                  {"text":"大型新能源汽车","value":"51"},
+                  {"text":"小型新能源汽车","value":"52"}
+    	          ];
+
+
+
+        var list = [{"text": "京"},
+                    {"text": "津"},
+                    {"text": "冀"},
+                    {"text": "晋"},
+                    {"text": "蒙"},
+                    {"text": "辽"},
+                    {"text": "吉"},
+                    {"text": "黑"},
+                    {"text": "沪"},
+                    {"text": "苏"},
+                    {"text": "浙"},
+                    {"text": "皖"},
+                    {"text": "闽"},
+                    {"text": "赣"},
+                    {"text": "鲁"},
+                    {"text": "豫"},
+                    {"text": "鄂"},
+                    {"text": "湘"},
+                    {"text": "粤"},
+                    {"text": "桂"},
+                    {"text": "琼"},
+                    {"text": "渝"},
+                    {"text": "川"},
+                    {"text": "贵"},
+                    {"text": "云"},
+                    {"text": "藏"},
+                    {"text": "陕"},
+                    {"text": "甘"},
+                    {"text": "青"},
+                    {"text": "宁"},
+                    {"text": "新"}
+        ];
+        var dp = {
+                // 服务代码类型（填充下拉框）
+                getOptionsForServiceCode: function(param, onSuccess, onError) {
+                        $.ajax(urls.ajaxData({url: urls.apibase + urls.syscodeServiceCode, data: param},
+                        function(data) {
+                                if (onSuccess) {
+                                        // 格式化数据为 funFormUtils.option 可可接受的格式
+                                        var len = data.data.length,
+                                                opt;
+                                        for (var i = 0; i < len; i++) {
+                                                opt = data.data[i];
+                                                opt.text = opt.fwmc;
+                                                opt.value = opt.fwdm;
+                                        }
+                                        data.data = _optionAll.concat(data.data);
+                                        onSuccess(data);
+                                }
+                        }, onError));
+                },
+                // 号牌种类选择（下拉框）
+                // {"message":"操作成功！","data":[{"code":"01","value":"大型汽车"},{"code":"02","value":"小型汽车"},{"code":"03","value":"使馆汽车"},{"code":"04","value":"领馆汽车"},{"code":"05","value":"境外汽车"},{"code":"06","value":"外籍汽车"},{"code":"07","value":"普通摩托车"},{"code":"08","value":"轻便摩托车"},{"code":"09","value":"使馆摩托车"},{"code":"10","value":"领馆摩托车"},{"code":"11","value":"境外摩托车"},{"code":"12","value":"外籍摩托车"},{"code":"13","value":"低速车"},{"code":"14","value":"拖拉机"},{"code":"15","value":"挂车"},{"code":"16","value":"教练汽车"},{"code":"17","value":"教练摩托车"},{"code":"18","value":"试验汽车"},{"code":"19","value":"试验摩托车"},{"code":"20","value":"临时入境汽车"},{"code":"21","value":"临时入境摩托车"},{"code":"22","value":"临时行驶车"},{"code":"23","value":"警用汽车"},{"code":"24","value":"警用摩托"},{"code":"25","value":"原农机号牌"},{"code":"26","value":"香港入出境车"},{"code":"27","value":"澳门入出境车"},{"code":"31","value":"武警号牌"},{"code":"32","value":"军队号牌"},{"code":"41","value":"无号牌"},{"code":"42","value":"假号牌"},{"code":"43","value":"挪用号牌"},{"code":"99","value":"其他号牌"}],"code":200}
+                getOptionsForPlateType: function(param, onSuccess, onError) {
+                    arguments[1]({
+                        // data: ([{text:''}]).concat(list)
+                        data: data1
+                });
+                },
+                getOptionsForPlateTypeAll: function(param, onSuccess, onError) {
+                    arguments[1]({
+                        // data: ([{text:''}]).concat(list)
+                        data: _optionAll.concat(data1)
+                });
+            },
+            
+                // 管辖发证机关  号牌号码前的字号（苏B）
+                getOptionsFZJG: function(param, onSuccess, onError) {
+                        param = $.extend({
+                                kvmode: 3    // 兼容早期设置
+                        }, param);
+                        $.ajax(urls.ajaxData({url: urls.apibase + urls.syscodeFZJG, data: param},
+                        function(data) {
+                                if (onSuccess) {
+                                        // 
+                                        var len = data.data.length,
+                                                opt;
+                                        if (param.kvmode == 1) {
+                                                // 显示名称和值相同
+                                                for (var i = 0; i < len; i++) {
+                                                        opt = data.data[i];
+                                                        opt.text = opt.dmz;     // 苏A, 苏B
+                                                        opt.value = opt.dmz;
+                                                }
+                                        } else if (param.kvmode == 2) {
+                                                // 值 与 显示名称相同
+                                                for (var i = 0; i < len; i++) {
+                                                        opt = data.data[i];
+                                                        opt.text = opt.dmsm3;   // 南京, 无锡
+                                                        opt.value = opt.dmsm3;   // 南京, 无锡
+                                                }
+                                        } else {
+                                                for (var i = 0; i < len; i++) {
+                                                        opt = data.data[i];
+                                                        opt.text = opt.dmsm3;   // 南京, 无锡
+                                                        opt.value = opt.dmz;   // 苏A, 苏B
+                                                }
+                                        }
+
+                                        onSuccess(data);
+                                }
+                        }, onError));
+                },
+             // 管辖发证机关  号牌号码前的字号（苏B）
+                getOptionsFZJGKT: function(param, onSuccess, onError) {
+                	param = $.extend({
+                		kvmode: 3    // 兼容早期设置
+                	}, param);
+                	$.ajax(urls.ajaxData({url: urls.apibase + urls.syscodeFZJGKT, data: param},
+                			function(data) {
+                		if (onSuccess) {
+                			// 
+                			var len = data.data.length,
+                			opt;
+                			if (param.kvmode == 1) {
+                				// 显示名称和值相同
+                				for (var i = 0; i < len; i++) {
+                					opt = data.data[i];
+                					opt.text = opt.dmz;     // 苏A, 苏B
+                					opt.value = opt.dmz;
+                				}
+                			} else if (param.kvmode == 2) {
+                				// 值 与 显示名称相同
+                				for (var i = 0; i < len; i++) {
+                					opt = data.data[i];
+                					opt.text = opt.dmsm3;   // 南京, 无锡
+                					opt.value = opt.dmsm3;   // 南京, 无锡
+                				}
+                			} else {
+                				for (var i = 0; i < len; i++) {
+                					opt = data.data[i];
+                					opt.text = opt.dmsm3;   // 南京, 无锡
+                					opt.value = opt.dmz;   // 苏A, 苏B
+                				}
+                			}
+                			
+                			onSuccess(data);
+                		}
+                	}, onError));
+                },
+                // 营运类型
+                getOptionsServiceType: function(param, onSuccess, onError) {
+                        $.ajax(urls.ajaxData({url: urls.apibase + urls.syscodeServiceType, data: param},
+                        function(data) {
+                                if (onSuccess) {
+                                        // 格式化数据为 funFormUtils.option 可可接受的格式
+                                        var len = data.data.length,
+                                                opt;
+                                        for (var i = 0; i < len; i++) {
+                                                opt = data.data[i];
+                                                opt.text = opt.value;
+                                                opt.value = opt.code;
+                                        }
+                                        data.data = _optionAll.concat(data.data);
+                                        onSuccess(data);
+                                }
+                        }, onError));
+                },
+                // 获取省份简称列表
+                getProvinceList: function() {
+
+                        if (arguments.length < 2) {
+                                return list;
+                        } else {
+                                arguments[1]({
+                                        // data: ([{text:''}]).concat(list)
+                                        data: list
+                                });
+                        }
+                },
+                getSwitchAreaList: function(param, onSuccess, onError) {
+                        $.ajax(urls.ajaxData({url: urls.apibase + urls.switcharea, data: param},
+                        function(data) {
+                                if (onSuccess) {
+                                        // 格式化数据
+                                        var len = data.data.length,
+                                                opt;
+                                        for (var i = 0; i < len; i++) {
+                                                opt = data.data[i];
+                                                opt.jumpurl = urls.areajumpurl + opt.sfdm;
+                                        }
+                                        onSuccess(data);
+                                }
+                        }, onError));
+                },
+                //获取号牌头
+                gethpt: function(param, onSuccess, onError) {
+                    $.ajax(urls.ajaxData({url: urls.apibase + urls.gethpt, data: param},
+                    function(data) {
+                            if (onSuccess) {
+                                    onSuccess(data);
+                            }
+                    }, onError));
+            },
+                //
+                _fakeItem: null
+        };
+
+        return dp;
+});
